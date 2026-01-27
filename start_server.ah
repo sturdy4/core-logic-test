@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Start the playit tunnel in the background
+./playit & 
+
+# Save the process ID of playit so we can kill it later
+PLAYIT_PID=$!
+
+# Navigate to your server folder (if you aren't already there)
+# cd ~/mc-server-1.21.10/
+
+# Start the Minecraft Server
+# (Replace 'server.jar' with your actual jar name)
+java -Xmx4G -Xms4G -jar server.jar nogui
+
+# When you stop the server, this kills the tunnel too
+kill $PLAYIT_PID

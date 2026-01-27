@@ -1,0 +1,6 @@
+update-check: true
+
+# In config.yml of VaultFormatter or similar formatting plugins
+number-format:
+  enabled: true
+  format: '#,###.##'

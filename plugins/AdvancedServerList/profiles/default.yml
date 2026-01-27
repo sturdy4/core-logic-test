@@ -1,0 +1,29 @@
+# Simple 2-line MOTD - NO ROTATION
+priority: 0
+condition: ''
+
+# Your 2 MOTD lines
+motd:
+  - '<gold><bold>BinwalkSMP'
+  - '<grey><bold>Test'
+
+# Optional: Keep favicon empty for default
+favicon: ''
+
+# Optional: Player count settings
+playerCount:
+  hidePlayers: false
+  hidePlayersHover: false
+  hover:
+    - '&6Welcome to Sunset Craft!'
+    - '&7Join our adventure server!'
+  text:
+  extraPlayers:
+    enabled: false
+    amount: 0
+  maxPlayers:
+    enabled: false
+    amount: 0
+  onlinePlayers:
+    enabled: false
+    amount: 0

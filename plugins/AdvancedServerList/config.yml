@@ -1,0 +1,40 @@
+enabled: true
+default-profile: "default"
+
+# Used for when AdvancedServerList doesn't have a cached player to use for player placeholders.
+unknownPlayer:
+  name: "Anonymous"
+  uuid: "606e2ff0-ed77-4842-9d6c-e1d3321c7838"
+
+# Should the Caching of players be disabled?
+disableCache: false
+
+# Should AdvancedServerList check for new versions?
+checkUpdates: true
+
+# Should debug mode be enabled?
+debug: false
+
+# Should the "ASL" ASCI art be displayed on plugin startup?
+printBanner: true
+
+# Sets how long Favicons should be cached.
+faviconCacheTime: 1
+
+# Sets how AdvancedServerList should handle the size and positioning of images for favicons.
+faviconResizeStrategy: 'resize'
+
+# Options to disable while the Maintenance Plugin is present and Maintenance Mode is active.
+disableDuringMaintenance:
+  motd: false
+  favicon: true
+  hidePlayers: true
+  hidePlayersHover: true
+  playerCountText: true
+  playerCountHover: true
+  extraPlayers: true
+  maxPlayers: true
+  onlinePlayers: true
+
+# DO NOT EDIT!
+configVersion: 10

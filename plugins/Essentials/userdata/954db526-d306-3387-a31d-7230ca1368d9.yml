@@ -1,0 +1,46 @@
+teleportenabled: true
+teleportauto: true
+godmode: false
+muted: false
+jailed: false
+ip-address: 127.0.0.1
+afk: false
+socialspy: false
+npc: false
+powertoolsenabled: true
+accepting-pay: true
+baltop-exempt: true
+timestamps:
+  lastteleport: 1767633025279
+  lastheal: 0
+  mute: 0
+  jail: 0
+  onlinejail: 0
+  logout: 1769552319334
+  login: 1769552312709
+  kits:
+    notch: 1767313085695
+    dtools: 1767313104321
+    tools: 1767313136599
+    firework: 1767313175744
+    color: 1767313190776
+money: '-910.0'
+last-account-name: Binwalk
+logoutlocation:
+  world: de0e3ffc-da33-44ee-aaea-117fa322d942
+  world-name: world
+  x: -98.37979453324377
+  y: 71.14285922704681
+  z: -303.80902966284964
+  yaw: -13.463419914245605
+  pitch: 34.95002746582031
+lastlocation:
+  world: de0e3ffc-da33-44ee-aaea-117fa322d942
+  world-name: world
+  x: -6.099517446768227
+  y: 101.0
+  z: 12.464456047942589
+  yaw: 116.69999694824219
+  pitch: 17.700002670288086
+nickname: Owner
+last-message-reply-recipient: false

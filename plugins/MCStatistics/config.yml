@@ -1,0 +1,31 @@
+# Website: https://mcstatistics.org/
+
+# When you make a server on MCStatistics website you will find a secret-key for that server you need to enter here
+secret-key: "phpSFVWaHasufspjK2SHxNaoSoJlJCUfHAkefi3hG5U"
+
+# Change this to true to enable debug mode
+debug: false
+
+# Disable ips from being sent to MCStatistics?
+disable-ip-tracking: false
+
+# You can add PlaceholderAPI placeholders here, they will be sent to MCStatistics
+upload-placeholders:
+  enabled: true
+  placeholders: 
+    - "%player_name%"
+    - "%statistic_player_kills%"
+    - "%statistic_deaths%"
+    - "%vault_eco_balance_formatted%"
+    - "%playerpoints_formatted%&7"
+    - "%server_online%"
+    - "%player_world%"
+    - "%player_ping%"
+    - "%statistic_time_played:hours%h"
+    - "%playtime_h%h %playtime_m%m"
+    - "%statistic_play_one_minute/60%h %statistic_play_one_minute%60%m"
+  # player-specific placeholders to send to the website (list of placeholder names without %%)
+  player:
+    - 'statistic_player_kills'
+    - 'statistic_deaths'
+    - 'player_level'

@@ -1,0 +1,47 @@
+teleportenabled: true
+teleportauto: false
+godmode: false
+muted: false
+jailed: false
+ip-address: 127.98.160.124
+afk: false
+socialspy: false
+npc: false
+powertoolsenabled: true
+accepting-pay: true
+baltop-exempt: false
+timestamps:
+  lastteleport: 1769536183801
+  lastheal: 0
+  mute: 0
+  jail: 0
+  onlinejail: 0
+  logout: 1769536629921
+  login: 1769535521959
+money: '0'
+last-account-name: ItzRealLui2
+lastlocation:
+  world: de0e3ffc-da33-44ee-aaea-117fa322d942
+  world-name: world
+  x: -1.5
+  y: 87.0
+  z: -9.5
+  yaw: 0.0
+  pitch: 0.0
+homes:
+  home:
+    world: de0e3ffc-da33-44ee-aaea-117fa322d942
+    world-name: world
+    x: -104.70147018185178
+    y: 64.0
+    z: -308.4392017752946
+    yaw: -111.22830200195312
+    pitch: -2.29927921295166
+logoutlocation:
+  world: de0e3ffc-da33-44ee-aaea-117fa322d942
+  world-name: world
+  x: -97.91419040600117
+  y: 64.0
+  z: -287.4296529876345
+  yaw: 140.03643798828125
+  pitch: 19.208410263061523

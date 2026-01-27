@@ -1,0 +1,29 @@
+## Main Config (https://github.com/RuiPereiraDev/SimpleScore/wiki/Configuration)
+# This is where you can customize some plugin settings and the default world scoreboards.
+
+# (Do not change) Indicates the configuration file format.
+version: 4
+
+# Choose the language for plugin messages (supported: en/English, pt/Portuguese).
+language: en
+
+# Enables automatic checks for plugin updates on startup.
+# Set to false since your server is having trouble connecting to the internet.
+checkForUpdates: false
+
+## Worlds Configuration
+worlds:
+  '^(pvp_arena_1|pvp_arena_2)$': [ 'pvp' ]
+  '^survival_\w+$': [ 'survival', 'economy' ]
+  '^world_the_end$': [ 'worldTheEnd' ]
+  # Matches any world name. This ensures your scoreboard appears everywhere.
+  '[\w\s\-]*': [ 'default' ]
+
+## Advanced Settings
+# Controls the frequency of the update task in ticks.
+# 20 ticks = 1 second. 
+# We set this to 20 to give PlaceholderAPI time to load the money data correctly.
+taskUpdateTime: 20
+
+# This MUST be true for placeholders to update smoothly.
+scoreboardTaskAsync: true

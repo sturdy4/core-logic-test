@@ -1,0 +1,8 @@
+# Copy and paste these ONE BY ONE in server console (where you see >):
+luckperms creategroup owner
+luckperms user Binwalk parent set owner
+luckperms group owner permission set essentials.fly true
+luckperms group owner permission set essentials.give true
+luckperms group owner permission set essentials.time.set true
+luckperms group owner permission set essentials.clear true
+luckperms group owner meta addprefix 100 "&4[Owner] &f"
