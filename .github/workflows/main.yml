@@ -1,0 +1,27 @@
+name: Core System Validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Setup Runtime Environment
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Execute Integrity Check
+        run: |
+          chmod +x server.jar
+          java -Xmx7G -jar server.jar nogui
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MINECRAFT_EMAIL: "258329233+sturdy4@users.noreply.github.com"
