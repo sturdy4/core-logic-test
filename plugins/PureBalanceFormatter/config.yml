@@ -1,0 +1,54 @@
+#
+#
+# ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+# │ PUREBALANCEFORMATTER v0.3 created by ZoomDK. This file contains a set of settings, to change different settings.           │
+# │                                                                                                                            │
+# │ For any help contact at discord.gg/zNPuERuKFN                                                                              │
+# └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+#
+#
+#
+#
+# Settings and be either: enabled or disabled
+#
+settings:
+  balance: enabled
+  pay: enabled
+#
+#
+#   You can customize "formatter" as you want.
+#   Either remove all of them, and make your own or you can change them.
+#   If you want any help, you can always get help on our discord
+#
+#
+formatter:
+  thousand:
+    format: 'k'
+    rangemin: 1000
+    rangemax: 999999
+    divide: 1000
+    decimalformat: '#.##'
+  million:
+    format: 'M'
+    rangemin: 1000000
+    rangemax: 999999999
+    divide: 1000000
+    decimalformat: '#.##'
+  billion:
+    format: 'B'
+    rangemin: 1000000000
+    rangemax: 999999999999
+    divide: 1000000000
+    decimalformat: '#.##'
+  trillion:
+    format: 'T'
+    rangemin: 1000000000000
+    rangemax: 999999999999999
+    divide: 1000000000000
+    decimalformat: '#.##'
+  quadrillion:
+    format: 'Q'
+    rangemin: 1000000000000000
+    rangemax: 999999999999999999
+    divide: 1000000000000000
+    decimalformat: '#.##'

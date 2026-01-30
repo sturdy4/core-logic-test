@@ -1,0 +1,13 @@
+{
+  "cpuName": "Intel(R) Core(TM) i3-10110U CPU @ 2.10GHz",
+  "cpuMicroarchitecture": "Whiskey Lake",
+  "cpuVendorFreq": 2100000000,
+  "logicalCores": 4,
+  "physicalCores": 2,
+  "totalMemory": 3780960256,
+  "pageSize": 4096,
+  "memoryType": "Unknown",
+  "diskCount": 2,
+  "partitionCount": 3,
+  "networkInterfaceCount": 1
+}

@@ -1,0 +1,19 @@
+main:
+  prefix: '&8[&e&l⚡&8] '
+  prefix_hover: true
+  threads: 1
+  monitor_interval: 5
+  errors_reporter: true
+  updater: true
+  warnings: true
+  bStats: true
+  command:
+    permission: lagfixer.command
+    aliases:
+    - lf
+    - antilag
+    - lag
+  map:
+    enabled: true
+    interval: 3
+    id: 0

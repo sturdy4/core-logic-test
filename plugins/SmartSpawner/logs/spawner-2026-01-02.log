@@ -1,0 +1,52 @@
+[2026-01-02 01:50:53] Spawner placed | Player: Binwalk | Location: world (151, 63, 34) | quantity=1
+[2026-01-02 01:51:29] Spawner placed | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | quantity=64
+[2026-01-02 01:51:31] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=128 amount_added=64 old_stack_size=64
+[2026-01-02 01:51:46] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=164 amount_added=36 old_stack_size=128
+[2026-01-02 01:51:46] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=200 amount_added=36 old_stack_size=164
+[2026-01-02 01:51:47] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=236 amount_added=36 old_stack_size=200
+[2026-01-02 01:51:47] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=272 amount_added=36 old_stack_size=236
+[2026-01-02 01:51:47] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=308 amount_added=36 old_stack_size=272
+[2026-01-02 01:51:48] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=344 amount_added=36 old_stack_size=308
+[2026-01-02 01:51:48] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=380 amount_added=36 old_stack_size=344
+[2026-01-02 01:51:49] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=416 amount_added=36 old_stack_size=380
+[2026-01-02 01:51:49] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=452 amount_added=36 old_stack_size=416
+[2026-01-02 01:51:49] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=488 amount_added=36 old_stack_size=452
+[2026-01-02 01:51:50] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=552 amount_added=64 old_stack_size=488
+[2026-01-02 01:51:50] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=616 amount_added=64 old_stack_size=552
+[2026-01-02 01:51:50] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=680 amount_added=64 old_stack_size=616
+[2026-01-02 01:51:51] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=744 amount_added=64 old_stack_size=680
+[2026-01-02 01:51:51] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=808 amount_added=64 old_stack_size=744
+[2026-01-02 01:51:52] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=872 amount_added=64 old_stack_size=808
+[2026-01-02 01:51:52] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=936 amount_added=64 old_stack_size=872
+[2026-01-02 01:51:52] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=1000 amount_added=64 old_stack_size=936
+[2026-01-02 01:52:40] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=990 amount_removed=10 old_stack_size=1000
+[2026-01-02 01:52:42] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=980 amount_removed=10 old_stack_size=990
+[2026-01-02 01:52:42] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=970 amount_removed=10 old_stack_size=980
+[2026-01-02 01:52:42] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=960 amount_removed=10 old_stack_size=970
+[2026-01-02 01:52:44] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=950 amount_removed=10 old_stack_size=960
+[2026-01-02 01:52:44] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=940 amount_removed=10 old_stack_size=950
+[2026-01-02 01:52:44] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=930 amount_removed=10 old_stack_size=940
+[2026-01-02 01:52:45] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=920 amount_removed=10 old_stack_size=930
+[2026-01-02 01:52:45] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=910 amount_removed=10 old_stack_size=920
+[2026-01-02 01:52:46] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=900 amount_removed=10 old_stack_size=910
+[2026-01-02 01:52:46] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=899 amount_removed=1 old_stack_size=900
+[2026-01-02 01:52:49] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=835 amount_removed=64 old_stack_size=899
+[2026-01-02 01:52:50] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=771 amount_removed=64 old_stack_size=835
+[2026-01-02 01:52:50] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=707 amount_removed=64 old_stack_size=771
+[2026-01-02 01:52:51] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=643 amount_removed=64 old_stack_size=707
+[2026-01-02 01:52:51] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=579 amount_removed=64 old_stack_size=643
+[2026-01-02 01:52:51] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=515 amount_removed=64 old_stack_size=579
+[2026-01-02 01:52:52] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=451 amount_removed=64 old_stack_size=515
+[2026-01-02 01:52:52] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=387 amount_removed=64 old_stack_size=451
+[2026-01-02 01:52:52] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=323 amount_removed=64 old_stack_size=387
+[2026-01-02 01:52:52] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=259 amount_removed=64 old_stack_size=323
+[2026-01-02 01:52:53] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=195 amount_removed=64 old_stack_size=259
+[2026-01-02 01:52:53] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=131 amount_removed=64 old_stack_size=195
+[2026-01-02 01:52:53] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=67 amount_removed=64 old_stack_size=131
+[2026-01-02 01:52:54] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=3 amount_removed=64 old_stack_size=67
+[2026-01-02 01:52:54] Spawner destacked via GUI | Player: Binwalk | Location: world (68, 65, 67) | Entity: COW | new_stack_size=1 amount_removed=2 old_stack_size=3
+[2026-01-02 01:52:57] Spawner stacked by hand | Player: Binwalk | Location: world (68, 65, 67) | new_stack_size=2 amount_added=1 old_stack_size=1
+[2026-01-02 01:53:11] Experience claimed | Player: Binwalk | Location: world (68, 65, 67) | exp_amount=1000
+[2026-01-02 01:54:46] Experience claimed | Player: Binwalk | Location: world (68, 65, 67) | exp_amount=60
+[2026-01-02 01:55:10] Spawner broken | Player: Binwalk | Location: world (68, 65, 67) | quantity=1
+[2026-01-02 01:55:12] Spawner broken | Player: Binwalk | Location: world (68, 65, 67) | quantity=1

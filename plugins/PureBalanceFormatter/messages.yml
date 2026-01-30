@@ -1,0 +1,82 @@
+#
+# ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+# │ PUREBALANCEFORMATTER v0.3 created by ZoomDK. This file contains a set of settings, to change all messages.                 │
+# │ List of all placeholders, can be seen under here                                                                           │
+# │ For any help contact at discord.gg/zNPuERuKFN                                                                              │
+# └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+#
+# ┌──────────────────────────────────────────────────┐
+# │ █▀█ █   ▄▀█ █▀▀ █▀▀ █ █ █▀█ █   █▀▄ █▀▀ █▀█ █▀ ▀ │
+# │ █▀▀ █▄▄ █▀█ █▄▄ ██▄ █▀█ █▄█ █▄▄ █▄▀ ██▄ █▀▄ ▄█ ▄ │
+# └──────────────────────────────────────────────────┘
+#
+#    Placeholders under "text_placeholders", can be made yourself
+#    Just keep in mind, that it's going to load the placeholders in order.
+#    If {prefix} is on top, and you use that in a other placeholder, it is not going to work
+#
+#    Use {<your placeholer name>} for a placeholder
+#
+#
+#
+text_placeholders:
+  prefix: '&6&lPure&e&lBalance&6&lFormatter &7v0.3'
+  missing_permission: '{short_prefix} &cMissing Permission!'
+  short_prefix: '&8[&6&lP&e&lB&6&lF&8]'
+  currency: £
+#
+helpmenu:
+  - '{prefix} &fcommands:'
+  - ''
+  - ' &6> &f/pbf reload &6- &eUse to reload config.yml and messages.yml'
+  - ' &6> &f/balance (player) &6- &eUse to see your own balance or others (can be disabled)'
+  - ' &6> &f/pay &6- &eUse to send money to other players (can be disabled)'
+  - ' &6> &f/pbf give (player) (amount) &6- &eUse to increase a player''s balance'
+  - ' &6> &f/pbf remove (player) (amount) &6- &eUse to decrease a player''s balance'
+  - ' &6> &f/pbf set (player) (amount) &6- &eUse to set a player''s balance'
+#
+#
+#    %balance_formatted% = the balance of the given player
+#    %player% = the name of the given player
+#
+#
+balance:
+  balance-message-yourself: '{short_prefix} &7Your balance is &a%balance_formatted%
+    {currency}'
+  balance-message-other: '{short_prefix} &b%player%''s &7balance is &a%balance_formatted%
+    {currency}'
+#
+#
+#    %balance_formatted% = the balance of the given player
+#    %paid_player% = the name of the paid player used in: pay-message-other
+#    %recieve_player% = the name of the player that gave the money  used in: pay-message-recieve
+#    %player% = the name of the player that can't be found used in: pay-player-not-online
+#
+pay:
+  pay-message-yourself: '{short_prefix} &cYou can''t pay yourself!'
+  pay-message-other: '{short_prefix} &7You have paid &a%balance_send_formatted% {currency} &7to &b%paid_player%'
+  pay-message-recieve: '{short_prefix} &7You have recieved &a%balance_send_formatted% {currency} &7from &b%recieve_player%'
+  pay-correct-usage: '{short_prefix} &7Correct usage: &e/pay (player) (amount)'
+  pay-player-not-online: '{short_prefix} &b%player% &7is not online!'
+  pay-message-not-enough: '{short_prefix} &cYou don''t have enough money!'
+#
+#
+#
+#    %balance_formatted% = the balance that either got removed, recieved or changed
+#    %player_send% = the name of the player that had their balance either removed, recieved or changed
+#
+admin:
+  reload: '{short_prefix} &aSuccessfully reloaded PureBalanceFormatter'
+  #
+  give-correct-usage: '{short_prefix} &7Correct usage: &e/pbf give (player) (amount)'
+  give-message-recieve: '{short_prefix} &7You have recieved &a%balance_send_formatted% {currency}'
+  give-message-send: '{short_prefix} &7You have given &a%balance_send_formatted% {currency} &7to &a%player_send%'
+  #
+  #
+  remove-correct-usage: '{short_prefix} &7Correct usage: &e/pbf remove (player) (amount)'
+  remove-message-recieve: '{short_prefix} &c%balance_send_formatted% {currency} &7have been taken from your account'
+  remove-message-taken: '{short_prefix} &7You have taken &c%balance_send_formatted% {currency} &7from &a%player_send%'
+  #
+  #
+  set-correct-usage: '{short_prefix} &7Correct usage: &e/pbf set (player) (amount)'
+  set-message-recieve: '{short_prefix} &7Your balance got changed to &a%balance_send_formatted% {currency}'
+  set-message-send: '{short_prefix} &7You changed &a%player_send%''s &7balance to &a%balance_send_formatted% {currency}'

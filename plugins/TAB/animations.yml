@@ -1,0 +1,113 @@
+MyAnimation1:
+  change-interval: 150
+  texts:
+    - '&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+    - '&8▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+    - '&8▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+    - '&8▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+    - '&f▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
+
+ServerName:
+  change-interval: 300
+  texts:
+  - '&c&lServerName'
+  - '&c&n&lServerName'
+  - '&b&lServerName'
+  - '&b&l&nServerName'
+  - '&e&lServerName'
+  - '&e&n&lServerName'
+
+web:
+  change-interval: 200
+  texts:
+  - '&ewww.domain.com'
+  - '&ewww.domain.com'
+  - '&ewww.domain.com'
+  - '&ewww.domain.com'
+  - '&ewww.domain.com'
+  - '&ewww.domain.com'
+  - '&6w&eww.domain.com'
+  - '&ew&6w&ew.domain.com'
+  - '&eww&6w&e.domain.com'
+  - '&ewww&6.&edomain.com'
+  - '&ewww.&6d&eomain.com'
+  - '&ewww.d&6o&emain.com'
+  - '&ewww.do&6m&eain.com'
+  - '&ewww.dom&6a&ein.com'
+  - '&ewww.doma&6i&en.com'
+  - '&ewww.domai&6n&e.com'
+  - '&ewww.domain&6.&ecom'
+  - '&ewww.domain.&6c&eom'
+  - '&ewww.domain.c&6o&em'
+  - '&ewww.domain.co&6m'
+  - '&ewww.domain.com'
+  - '&ewww.domain.com'
+  - '&ewww.domain.com'
+  - '&ewww.domain.com'
+  - '&ewww.domain.com'
+  - '&ewww.domain.com'
+
+vote:
+  change-interval: 1000
+  texts:
+  - '&avote.domain.com'
+  - '&a&nvote.domain.com'
+  - '&5vote.domain.com'
+  - '&5&nvote.domain.com'
+
+Welcome:
+  change-interval: 400
+  texts:
+  - '&2&l &a'
+  - '&2&lW &a'
+  - '&2&lW &a'
+  - '&2&lWe &a'
+  - '&2&lWel &a'
+  - '&2&lWelc &a'
+  - '&2&lWelco &a'
+  - '&2&lWelcom &a'
+  - '&2&lWelcome &a'
+  - '&2&lWelcome &a'
+  - '&2&lWelcome &a'
+  - '&2&lWelcome &a'
+  - '&2&lWelcom &a'
+  - '&2&lWelco &a'
+  - '&2&lWelc &a'
+  - '&2&lWel &a'
+  - '&2&lWe &a'
+  - '&2&lW &a'
+  - '&2&lW &a'
+
+HighlightAnimation:
+  change-interval: 50
+  texts:
+  - '&6&lMyServer'
+  - '&f&lM&6&lyServer'
+  - '&f&lMy&6&lServer'
+  - '&f&lMyS&6&lerver'
+  - '&6&lM&f&ly&6&lServer'
+  - '&6&lMy&f&lS&6&lerver'
+  - '&6&lMyS&f&le&6&lrver'
+  - '&6&lMySe&f&lr&6&lver'
+  - '&6&lMySer&f&lv&6&ler'
+  - '&6&lMyServ&f&le&6&lr'
+  - '&6&lMyServe&f&lr'
+  - '&6&lMyServer'
+  - '&6&lMyServer'
+  - '&6&lMyServer'
+  - '&6&lMyServer'
+  - '&6&lMyServer'
+  - '&6&lMyServer'
+
+time:
+  change-interval: 3000
+  texts:
+  - '&7Time: &b%time%'
+
+barcolors:
+  change-interval: 1000
+  texts:
+  - RED
+  - BLUE
+  - GREEN
+  - YELLOW

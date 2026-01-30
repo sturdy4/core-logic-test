@@ -1,0 +1,38 @@
+teleportenabled: true
+teleportauto: false
+godmode: false
+muted: false
+jailed: false
+ip-address: 197.27.34.94
+afk: false
+socialspy: false
+npc: false
+powertoolsenabled: true
+accepting-pay: true
+baltop-exempt: false
+timestamps:
+  lastteleport: 1767481421622
+  lastheal: 0
+  mute: 0
+  jail: 0
+  onlinejail: 0
+  logout: 1767490020022
+  login: 1767475480339
+money: '14001000'
+last-account-name: arselan220
+lastlocation:
+  world: c60e8262-6f51-4645-a35f-8527c806a853
+  world-name: world
+  x: 182.19332862594726
+  y: 67.0
+  z: 5.3501804097455254
+  yaw: 69.44871520996094
+  pitch: 60.599998474121094
+logoutlocation:
+  world: 265b66f3-b284-43c6-8f75-e16b8120c6cd
+  world-name: world_nether
+  x: -6.842846025356297
+  y: 39.0
+  z: -52.449974778332674
+  yaw: 38.6979866027832
+  pitch: 90.0

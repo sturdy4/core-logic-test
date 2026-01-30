@@ -1,0 +1,8 @@
+# EzClean configuration has moved!
+#
+# The plugin now loads its settings from multiple files within the EzClean data folder:
+#   - death-chests.yml controls the optional death chest feature.
+#   - cleaners/*.yml contains individual cleaner profiles (e.g. cleaners/default.yml).
+#
+# This placeholder file remains in the jar for compatibility but is no longer read by
+# EzClean during startup. Remove it safely or keep it as a reference for the new layout.
