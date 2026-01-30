@@ -20,8 +20,12 @@ jobs:
 
       - name: Inject Discord Token
         run: |
-          # This replaces the placeholder with the actual secret from your GitHub Actions Secrets
-          sed -i 's/"TOKEN_PLACEHOLDER"/"${{ secrets.DISCORD_BOT_TOKEN }}"/' plugins/DiscordSRV/config.yml
+          # Replaces the placeholder line entirely to ensure correct formatting and quotes
+          sed -i "s/BotToken:.*/BotToken: \"${{ secrets.DISCORD_BOT_TOKEN }}\"/" plugins/DiscordSRV/config.yml
+          
+          # Verification: This prints the top of the config to the logs
+          # GitHub will mask the secret value, but we can see if the line changed
+          head -n 15 plugins/DiscordSRV/config.yml
 
       - name: Execute Integrity Check
         run: |
@@ -30,5 +34,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MINECRAFT_EMAIL: "258329233+sturdy4@users.noreply.github.com"
-          # Adding the secret as an env variable helps ensure it's available to the runner
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
