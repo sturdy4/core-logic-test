@@ -18,6 +18,11 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Inject Discord Token
+        run: |
+          # This replaces the placeholder with the actual secret from your GitHub Actions Secrets
+          sed -i 's/"TOKEN_PLACEHOLDER"/"${{ secrets.DISCORD_BOT_TOKEN }}"/' plugins/DiscordSRV/config.yml
+
       - name: Execute Integrity Check
         run: |
           chmod +x server.jar
@@ -25,3 +30,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MINECRAFT_EMAIL: "258329233+sturdy4@users.noreply.github.com"
+          # Adding the secret as an env variable helps ensure it's available to the runner
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
