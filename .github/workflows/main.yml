@@ -3,6 +3,7 @@ name: Minecraft Server Runner
 concurrency:
   group: minecraft-server
   cancel-in-progress: false
+
 on:
   workflow_dispatch:
   push:
@@ -18,12 +19,11 @@ jobs:
       actions: write
     
     steps:
-   # THIS MUST BE THE FIRST STEP
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-
+          fetch-depth: 0  # Crucial for seeing the latest saves
+          
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -65,7 +65,7 @@ jobs:
           chmod +x server.jar
           mkfifo server_input
           
-          # 10-MINUTE AUTO-SAVE LOOP (Insurance for Cancellations)
+          # 10-MINUTE AUTO-SAVE LOOP
           (
             while true; do
               sleep 600
@@ -74,10 +74,10 @@ jobs:
             done
           ) & 
 
-          # Optimized startup flags for Networking and CPU efficiency
+          # Optimized startup flags
           tail -f server_input | java -Xms2G -Xmx14G -XX:+UseG1GC -Dsun.net.inetaddr.ttl=0 -Dio.netty.eventLoopThreads=8 -jar server.jar nogui &
           
-          # Wait 350 minutes before the 6-hour cycle
+          # Wait 350 minutes (just under 6 hours)
           sleep 350m
           
           echo "say Server cycling for auto-save. Back in 2 minutes!" > server_input
@@ -93,21 +93,22 @@ jobs:
           git config --global user.email "server-bot@example.com"
           git config --global user.name "ServerBot"
           
-          # 1. PREVENT SUBMODULE ERRORS (Removes hidden .git folders in plugins)
+          # 1. PREVENT SUBMODULE ERRORS
           find plugins/ -name ".git" -exec rm -rf {} +
           
           # 2. CLEANUP TEMP/SENSITIVE FILES
           rm -f server_input
           rm -f plugins/connect/token.json
           rm -rf logs/
-          
-          # 3. SELECTIVE SAVE (Ensures World & Player progress is saved, but Secrets are NOT)
+
+          # 3. SELECTIVE SAVE
           git add world/ world_nether/ world_the_end/
           git add plugins/Essentials/userdata/
           git add plugins/LuckPerms/
           git add plugins/PlayerPoints/
-          git add plugins/AuthMe/               # <--- This saves the passwords!
-          git add plugins/PlayerStats/          # <--- Saves your player statistics!
+          git add plugins/AuthMe/
+          git add plugins/PlayerStats/
+          git add plugins/Kryptonite/
           
           # 4. PUSH CHANGES TO GITHUB
           if ! git diff-index --quiet HEAD; then
