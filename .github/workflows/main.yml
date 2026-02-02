@@ -22,8 +22,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 
-
+          fetch-depth: 0  # Crucial for seeing the latest saves
+          
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -36,31 +36,28 @@ jobs:
           mkdir -p plugins/AuthMe
           mkdir -p plugins/PlayerStats
           
-          # 1. Download Minekube Connect
+          # Download Minekube Connect
           curl -L -o plugins/connect-spigot.jar https://github.com/minekube/connect-java/releases/latest/download/connect-spigot.jar
           
-          # 2. Re-write the config (IMPORTANT: No leading spaces inside the EOF block)
+          # Configure Minekube Endpoint/Allow cracked players
           cat <<EOF > plugins/connect/config.yml
           endpoint: "binwalksmp"
           passthrough: true
           EOF
           
-          # 3. Configure Minekube Token
+          # Configure Minekube Token
           echo "{\"token\":\"${{ secrets.MINEKUBE_TOKEN }}\"}" > plugins/connect/token.json
-          
-          # 4. SETTLE TIME: Ensures files are fully written before Java attempts to read them
-          sleep 5
 
       - name: Run Server
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         run: |
-          # Inject Discord Token
+          # Inject Discord Token for this session only
           if [ -f plugins/DiscordSRV/config.yml ]; then
             sed -i "s/BotToken:.*/BotToken: \"$DISCORD_BOT_TOKEN\"/" plugins/DiscordSRV/config.yml
           fi
 
-          # Force Offline Mode for AuthMe/Cracked players
+          # Ensure server.properties is set to offline mode for AuthMe
           if [ -f server.properties ]; then
             sed -i "s/online-mode=.*/online-mode=false/" server.properties
           fi
@@ -77,10 +74,10 @@ jobs:
             done
           ) & 
 
-          # Start Server
+          # Optimized startup flags
           tail -f server_input | java -Xms2G -Xmx14G -XX:+UseG1GC -Dsun.net.inetaddr.ttl=0 -Dio.netty.eventLoopThreads=8 -jar server.jar nogui &
           
-          # 6-hour cycle (350 minutes)
+          # Wait 350 minutes (just under 6 hours)
           sleep 350m
           
           echo "say Server cycling for auto-save. Back in 2 minutes!" > server_input
@@ -96,15 +93,15 @@ jobs:
           git config --global user.email "server-bot@example.com"
           git config --global user.name "ServerBot"
           
-          # Prevent Submodule Errors
+          # 1. PREVENT SUBMODULE ERRORS
           find plugins/ -name ".git" -exec rm -rf {} +
           
-          # Cleanup sensitive/temp files
+          # 2. CLEANUP TEMP/SENSITIVE FILES
           rm -f server_input
           rm -f plugins/connect/token.json
           rm -rf logs/
 
-          # SELECTIVE SAVE
+          # 3. SELECTIVE SAVE
           git add world/ world_nether/ world_the_end/
           git add plugins/Essentials/userdata/
           git add plugins/LuckPerms/
@@ -112,8 +109,8 @@ jobs:
           git add plugins/AuthMe/
           git add plugins/PlayerStats/
           git add plugins/Kryptonite/
-          git add plugins/connect/config.yml # Save the config so 'passthrough' stays true
           
+          # 4. PUSH CHANGES TO GITHUB
           if ! git diff-index --quiet HEAD; then
             git commit -m "Automated world save [skip ci]"
             git push
@@ -121,7 +118,7 @@ jobs:
             echo "No changes detected."
           fi
           
-          # Trigger Restart
+          # 5. TRIGGER NEXT 6-HOUR RUN
           curl -L \
             -X POST \
             -H "Accept: application/vnd.github+json" \
