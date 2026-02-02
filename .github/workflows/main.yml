@@ -36,16 +36,16 @@ jobs:
           mkdir -p plugins/AuthMe
           mkdir -p plugins/PlayerStats
           
-          # 1. Download Minekube Connect
+          # Download Minekube Connect
           curl -L -o plugins/connect-spigot.jar https://github.com/minekube/connect-java/releases/latest/download/connect-spigot.jar
           
-          # 2. Correct Minekube Config for Offline Players
+          # Force Minekube Config (Ensures Passthrough is ON)
           cat <<EOF > plugins/connect/config.yml
           endpoint: "binwalksmp"
           passthrough: true
           EOF
-           
-          # 3. Inject Minekube Token
+          
+          # Inject Minekube Token
           echo "{\"token\":\"${{ secrets.MINEKUBE_TOKEN }}\"}" > plugins/connect/token.json
           sleep 5
 
@@ -59,14 +59,10 @@ jobs:
             sed -i "s/BotToken:.*/BotToken: \"$DISCORD_BOT_TOKEN\"/" plugins/DiscordSRV/config.yml
           fi
 
-          # 2. Fix server.properties WITHOUT deleting existing settings
+          # 2. Inject Server Management Secret & Force Offline Mode
           if [ -f server.properties ]; then
-            # Force offline mode for AuthMe
-            sed -i "s/online-mode=.*/online-mode=false/" server.properties
-            # Set player limit
-            sed -i "s/max-players=.*/max-players=1000/" server.properties
-            # Update management secret if exists
             sed -i "s/management-server-secret=.*/management-server-secret=$MANAGEMENT_SECRET/" server.properties
+            sed -i "s/online-mode=.*/online-mode=false/" server.properties
           fi
           
           chmod +x server.jar
@@ -102,13 +98,12 @@ jobs:
           
           find plugins/ -name ".git" -exec rm -rf {} +
           
-          # CLEANUP: Remove temporary files/tokens
+          # CLEANUP: Remove secrets before committing back to Git
           rm -f server_input
           rm -f plugins/connect/token.json
           
-          # SELECTIVE SAVE
+          # 3. SELECTIVE SAVE
           git add world/ world_nether/ world_the_end/
-          git add server.properties
           git add plugins/Essentials/userdata/
           git add plugins/LuckPerms/
           git add plugins/PlayerPoints/
@@ -120,8 +115,11 @@ jobs:
           if ! git diff-index --quiet HEAD; then
             git commit -m "Automated world save [skip ci]"
             git push
+          else
+            echo "No changes detected."
           fi
           
+          # Trigger Restart
           curl -L \
             -X POST \
             -H "Accept: application/vnd.github+json" \
