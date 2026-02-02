@@ -25,21 +25,25 @@ jobs:
 
       - name: Download & Configure Minekube
         run: |
-          # 1. Download the actual bridge plugin so it shows up in /plugins
+          # 1. Ensure the folder exists
           mkdir -p plugins/connect
+          
+          # 2. Download the plugin
           curl -L -o plugins/connect-spigot.jar https://github.com/minekube/connect-java/releases/latest/download/connect-spigot.jar
           
-          # 2. Create the config so it knows which endpoint to link to
+          # 3. Create config.yml with JUST the endpoint
           cat <<EOF > plugins/connect/config.yml
-          token: "${{ secrets.MINEKUBE_TOKEN }}"
           endpoint: "binwalksmp"
           EOF
+
+          # 4. Create token.json with the secret separately
+          echo "{\"token\":\"${{ secrets.MINEKUBE_TOKEN }}\"}" > plugins/connect/token.json
 
       - name: Run Server with Auto-Save
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         run: |
-          # Inject Discord Token into config
+          # Inject Discord Token if config exists
           if [ -f plugins/DiscordSRV/config.yml ]; then
             sed -i "s/BotToken:.*/BotToken: \"$DISCORD_BOT_TOKEN\"/" plugins/DiscordSRV/config.yml
           fi
@@ -50,7 +54,7 @@ jobs:
           mkfifo server_input
           tail -f server_input | java -Xms2G -Xmx14G -XX:+UseG1GC -jar server.jar nogui &
           
-          # Wait 350 minutes before cycling
+          # Wait 350 minutes before cycling (leaves 10 mins for save/push)
           sleep 350m
           
           echo "say Server cycling for auto-save. Back in 2 minutes!" > server_input
@@ -66,18 +70,18 @@ jobs:
           git config --global user.email "server-bot@example.com"
           git config --global user.name "ServerBot"
           
-          # Cleanup before push
+          # Remove session-specific files
           rm -f server_input
           rm -rf logs/
           
           git add .
-          # Only commit if there are world changes
+          # Only commit if world/config changes exist
           if ! git diff-index --quiet HEAD; then
             git commit -m "Automated world save [skip ci]"
             git push
           fi
           
-          # Trigger the loop
+          # Trigger the next 6-hour cycle
           curl -L \
             -X POST \
             -H "Accept: application/vnd.github+json" \
