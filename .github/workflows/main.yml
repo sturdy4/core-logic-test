@@ -39,11 +39,12 @@ jobs:
           # Download Minekube Connect
           curl -L -o plugins/connect-spigot.jar https://github.com/minekube/connect-java/releases/latest/download/connect-spigot.jar
           
-          # Force Minekube Config (Ensures Passthrough is ON)
-          cat <<EOF > plugins/connect/config.yml
-          endpoint: "binwalksmp"
-          passthrough: true
+          #offline/cracked
+          cat <<EOF > server.properties
+          online-mode=false
+          max-players=1000
           EOF
+          echo 'allow-offline-mode-players: true' >> plugins/connect/config.yml
           
           # Inject Minekube Token
           echo "{\"token\":\"${{ secrets.MINEKUBE_TOKEN }}\"}" > plugins/connect/token.json
