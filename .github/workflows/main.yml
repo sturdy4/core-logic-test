@@ -36,17 +36,16 @@ jobs:
           mkdir -p plugins/AuthMe
           mkdir -p plugins/PlayerStats
           
-          # Download Minekube Connect
+          # 1. Download Minekube Connect
           curl -L -o plugins/connect-spigot.jar https://github.com/minekube/connect-java/releases/latest/download/connect-spigot.jar
           
-          #offline/cracked
-          cat <<EOF > server.properties
-          online-mode=false
-          max-players=1000
+          # 2. Correct Minekube Config (This is the real key for offline players)
+          cat <<EOF > plugins/connect/config.yml
+          endpoint: "binwalksmp"
+          passthrough: true
           EOF
-          echo 'allow-offline-mode-players: true' >> plugins/connect/config.yml
           
-          # Inject Minekube Token
+          # 3. Inject Minekube Token
           echo "{\"token\":\"${{ secrets.MINEKUBE_TOKEN }}\"}" > plugins/connect/token.json
           sleep 5
 
@@ -60,10 +59,14 @@ jobs:
             sed -i "s/BotToken:.*/BotToken: \"$DISCORD_BOT_TOKEN\"/" plugins/DiscordSRV/config.yml
           fi
 
-          # 2. Inject Server Management Secret & Force Offline Mode
+          # 2. Fix server.properties WITHOUT deleting it
           if [ -f server.properties ]; then
-            sed -i "s/management-server-secret=.*/management-server-secret=$MANAGEMENT_SECRET/" server.properties
+            # Force offline mode for AuthMe
             sed -i "s/online-mode=.*/online-mode=false/" server.properties
+            # Update max players
+            sed -i "s/max-players=.*/max-players=1000/" server.properties
+            # Inject Management Secret (Since you left it blank in the file)
+            sed -i "s/management-server-secret=.*/management-server-secret=$MANAGEMENT_SECRET/" server.properties
           fi
           
           chmod +x server.jar
@@ -81,7 +84,7 @@ jobs:
           # Start Server
           tail -f server_input | java -Xms2G -Xmx14G -XX:+UseG1GC -Dsun.net.inetaddr.ttl=0 -Dio.netty.eventLoopThreads=8 -jar server.jar nogui &
           
-          # 6-hour cycle
+          # 6-hour cycle (350 mins)
           sleep 350m
           
           echo "say Server cycling for auto-save. Back in 2 minutes!" > server_input
@@ -99,12 +102,13 @@ jobs:
           
           find plugins/ -name ".git" -exec rm -rf {} +
           
-          # CLEANUP: Remove secrets before committing back to Git
+          # CLEANUP: Remove secrets before committing
           rm -f server_input
           rm -f plugins/connect/token.json
           
           # 3. SELECTIVE SAVE
           git add world/ world_nether/ world_the_end/
+          git add server.properties
           git add plugins/Essentials/userdata/
           git add plugins/LuckPerms/
           git add plugins/PlayerPoints/
