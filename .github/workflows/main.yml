@@ -39,17 +39,16 @@ jobs:
           # 1. Download Minekube Connect
           curl -L -o plugins/connect-spigot.jar https://github.com/minekube/connect-java/releases/latest/download/connect-spigot.jar
           
-          # 2. Write the config (FLUSH TO LEFT MARGIN)
-          # This ensures the YAML is formatted correctly so the plugin can read it.
+          # 2. Correct Minekube Config (FLUSH TO THE LEFT)
           cat <<EOF > plugins/connect/config.yml
           endpoint: "binwalksmp"
           passthrough: true
-          EOF
+            EOF
           
           # 3. Inject Minekube Token
           echo "{\"token\":\"${{ secrets.MINEKUBE_TOKEN }}\"}" > plugins/connect/token.json
           
-          # 4. DEBUG: This will show you in the GitHub logs if the file is correct
+          # 4. DEBUG CHECK
           echo "--- START CONFIG CHECK ---"
           cat plugins/connect/config.yml
           echo "--- END CONFIG CHECK ---"
@@ -61,12 +60,12 @@ jobs:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           MANAGEMENT_SECRET: ${{ secrets.MANAGEMENT_SECRET }}
         run: |
-          # Inject Discord Token
+          # 1. Inject Discord Token
           if [ -f plugins/DiscordSRV/config.yml ]; then
             sed -i "s/BotToken:.*/BotToken: \"$DISCORD_BOT_TOKEN\"/" plugins/DiscordSRV/config.yml
           fi
 
-          # Fix server.properties (Force offline mode and inject secret)
+          # 2. Fix server.properties WITHOUT deleting it
           if [ -f server.properties ]; then
             sed -i "s/online-mode=.*/online-mode=false/" server.properties
             sed -i "s/max-players=.*/max-players=1000/" server.properties
@@ -123,4 +122,4 @@ jobs:
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/${{ github.repository }}/dispatches \
-            -d '{"event_type": "restart_server"}' 
+            -d '{"event_type": "restart_server"}'
