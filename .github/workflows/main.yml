@@ -39,15 +39,6 @@ jobs:
           # Download Minekube Connect
           curl -L -o plugins/connect-spigot.jar https://github.com/minekube/connect-java/releases/latest/download/connect-spigot.jar
           
-          # Download Kryptonite for lag reduction
-          curl -L -o plugins/Kryptonite.jar https://github.com/mizofumi0411/Kryptonite/releases/download/v1.1.2/Kryptonite-Bukkit.jar
-
-          # Download AuthMe Reloaded (Security for Cracked Players)
-          curl -L -o plugins/AuthMe-Reloaded.jar https://github.com/AuthMe/AuthMeReloaded/releases/download/5.6.0-beta2/AuthMe-5.6.0-beta2-dist.jar
-
-          # Download PlayerStats (Required for your PlaceholderAPI expansion)
-          curl -L -o plugins/PlayerStats.jar https://github.com/mizofumi0411/PlayerStats/releases/download/v1.6.5/PlayerStats-Bukkit.jar
-          
           # Configure Minekube Endpoint/Allow cracked players
           cat <<EOF > plugins/connect/config.yml
           endpoint: "binwalksmp"
