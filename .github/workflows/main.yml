@@ -1,5 +1,8 @@
 name: Minecraft Server Runner
 
+concurrency:
+  group: minecraft-server
+  cancel-in-progress: false
 on:
   workflow_dispatch:
   push:
@@ -26,16 +29,21 @@ jobs:
       - name: Download & Configure Plugins
         run: |
           mkdir -p plugins/connect
+          mkdir -p plugins/AuthMe
           
           # Download Minekube Connect
           curl -L -o plugins/connect-spigot.jar https://github.com/minekube/connect-java/releases/latest/download/connect-spigot.jar
           
           # Download Kryptonite for lag reduction
-          curl -L -o plugins/Kryptonite.jar https://github.com/mizofumi0411/Kryptonite/releases/latest/download/Kryptonite-Bukkit.jar
+          curl -L -s -o plugins/Kryptonite.jar https://github.com/mizofumi0411/Kryptonite/releases/download/v1.1.2/Kryptonite-Bukkit.jar
+
+          # Download AuthMe Reloaded (Security for Cracked Players)
+          curl -L -o plugins/AuthMe-Reloaded.jar https://github.com/AuthMe/AuthMeReloaded/releases/download/5.6.0-beta2/AuthMe-5.6.0-beta2-dist.jar
           
-          # Configure Minekube Endpoint
+          # Configure Minekube Endpoint/Allow cracked players
           cat <<EOF > plugins/connect/config.yml
           endpoint: "binwalksmp"
+          passthrough: true
           EOF
           
           # Configure Minekube Token
@@ -48,6 +56,11 @@ jobs:
           # Inject Discord Token for this session only
           if [ -f plugins/DiscordSRV/config.yml ]; then
             sed -i "s/BotToken:.*/BotToken: \"$DISCORD_BOT_TOKEN\"/" plugins/DiscordSRV/config.yml
+          fi
+
+          # Ensure server.properties is set to offline mode for AuthMe
+          if [ -f server.properties ]; then
+            sed -i "s/online-mode=.*/online-mode=false/" server.properties
           fi
           
           chmod +x server.jar
@@ -94,6 +107,7 @@ jobs:
           git add plugins/Essentials/userdata/
           git add plugins/LuckPerms/
           git add plugins/PlayerPoints/
+          git add plugins/AuthMe/               # <--- This saves the passwords!
           
           # 4. PUSH CHANGES TO GITHUB
           if ! git diff-index --quiet HEAD; then
