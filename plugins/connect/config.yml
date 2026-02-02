@@ -25,7 +25,7 @@ metrics:
   # If metrics should be disabled.
   disabled: false
   # The unique id that should be consistent for a server/proxy.
-  uuid: bdfb97d7-bfca-4c1b-857c-750623cee2ae
+  uuid: "9ffa66ce-08cb-429b-8748-58b37b668b7d"
 
 # Do not change this
 config-version: 1
