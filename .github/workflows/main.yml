@@ -34,6 +34,7 @@ jobs:
         run: |
           mkdir -p plugins/connect
           mkdir -p plugins/AuthMe
+          mkdir -p plugins/PlayerStats
           
           # Download Minekube Connect
           curl -L -o plugins/connect-spigot.jar https://github.com/minekube/connect-java/releases/latest/download/connect-spigot.jar
