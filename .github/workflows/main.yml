@@ -55,7 +55,21 @@ jobs:
       - name: Run Server
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          NGROK_AUTHTOKEN: ${{ secrets.NGROK_AUTHTOKEN }}
         run: |
+          # --- NGROK SETUP START ---
+          curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
+          echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
+          sudo apt update && sudo apt install ngrok -y
+          ngrok config add-authtoken $NGROK_AUTHTOKEN
+          
+          # Start ngrok tunnel for WebConsole (Port 8088) in background
+          ngrok http 8088 --log=stdout > ngrok.log &
+          sleep 5
+          echo "🔗 WEB CONSOLE LINK:"
+          curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'
+          # --- NGROK SETUP END ---
+
           if [ -f plugins/DiscordSRV/config.yml ]; then
             sed -i "s/BotToken:.*/BotToken: \"$DISCORD_BOT_TOKEN\"/" plugins/DiscordSRV/config.yml
           fi
@@ -99,10 +113,11 @@ jobs:
           git config --global user.name "ServerBot"
           
           # 1. DELETE SENSITIVE FOLDERS BEFORE SAVING
-          # This prevents the "Push cannot contain secrets" error
           rm -rf plugins/DiscordSRV/
+          rm -rf plugins/WebConsole/
           rm -rf logs/
           rm -f plugins/connect/token.json
+          rm -f ngrok.log
           
           # 2. PREVENT SUBMODULE ERRORS
           find plugins/ -name ".git" -exec rm -rf {} +
@@ -124,4 +139,4 @@ jobs:
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/${{ github.repository }}/dispatches \
-            -d '{"event_type": "restart_server"}'  
+            -d '{"event_type": "restart_server"}'
