@@ -1,41 +1,43 @@
 name: Minecraft Server Runner
-
 concurrency:
   group: minecraft-server
   cancel-in-progress: false
-
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
   repository_dispatch:
     types: [ restart_server ]
-
 jobs:
   run:
     runs-on: ubuntu-latest
     permissions:
       contents: write
       actions: write
-    
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 
-
+          fetch-depth: 0
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
-
       - name: Download & Prepare Plugins
         run: |
           mkdir -p plugins/connect
           mkdir -p plugins/AuthMe
           mkdir -p plugins/PlayerStats
           
+          # NEW: Prepare WebConsole Config
+          mkdir -p plugins/WebConsole
+          if [ -f "plugins/WebConsole/config.yml" ]; then
+            echo "✅ WebConsole config.yml detected in repo."
+          else
+            echo "⚠️ Warning: No config.yml found in plugins/WebConsole/ in repo."
+          fi
+
           # Download Minekube Connect
           curl -L -o plugins/connect-spigot.jar https://github.com/minekube/connect-java/releases/latest/download/connect-spigot.jar
           
@@ -69,11 +71,10 @@ jobs:
           echo "🔗 WEB CONSOLE LINK:"
           curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'
           # --- NGROK SETUP END ---
-
+          
           if [ -f plugins/DiscordSRV/config.yml ]; then
             sed -i "s/BotToken:.*/BotToken: \"$DISCORD_BOT_TOKEN\"/" plugins/DiscordSRV/config.yml
           fi
-
           if [ -f server.properties ]; then
             sed -i "s/online-mode=.*/online-mode=false/" server.properties
           fi
@@ -93,7 +94,7 @@ jobs:
               fi
             done
           ) & 
-
+          
           tail -f server_input | java -Xms2G -Xmx14G -XX:+UseG1GC -Dsun.net.inetaddr.ttl=0 -Dio.netty.eventLoopThreads=8 -jar server.jar nogui &
           SERVER_PID=$!
           
