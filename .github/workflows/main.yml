@@ -30,12 +30,15 @@ jobs:
           mkdir -p plugins/AuthMe
           mkdir -p plugins/PlayerStats
           
-          # NEW: Prepare WebConsole Config
+          # --- WEB CONSOLE CONFIG PREPARATION ---
+          # Create folder so plugin finds the config
           mkdir -p plugins/WebConsole
+          
+          # Check if you have the config in your repo and move it to the right place
           if [ -f "plugins/WebConsole/config.yml" ]; then
-            echo "✅ WebConsole config.yml detected in repo."
+            echo "✅ WebConsole config found in repository."
           else
-            echo "⚠️ Warning: No config.yml found in plugins/WebConsole/ in repo."
+            echo "⚠️ WebConsole config.yml NOT found in repo. Plugin will use defaults (Port 8081)."
           fi
 
           # Download Minekube Connect
@@ -114,6 +117,8 @@ jobs:
           git config --global user.name "ServerBot"
           
           # 1. DELETE SENSITIVE FOLDERS BEFORE SAVING
+          # Note: We remove them so they aren't committed back to repo with secrets,
+          # but the world files and other plugin data remain safe.
           rm -rf plugins/DiscordSRV/
           rm -rf plugins/WebConsole/
           rm -rf logs/
