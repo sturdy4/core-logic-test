@@ -28,7 +28,7 @@ broadcast:
   dynamic:
     enabled: false
     # Extra reminders at specific minute marks before the cleanup.
-    minutes: [30, 15, 10, 5]
+    minutes: [10, 10, 5, 1]
     # MiniMessage formatted message lives in messages.yml under cleaners.<id>.broadcast.dynamic.message.
   stats-summary:
     enabled: false
