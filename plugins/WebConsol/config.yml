@@ -13,4 +13,4 @@ socketPort: 8089
 passwords:
   admin:
     # Change 'your_user' and 'your_password' to whatever you want
-    Binwalk: "666666"
+    admin:  "666666"
