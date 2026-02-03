@@ -29,32 +29,13 @@ jobs:
           mkdir -p plugins/connect
           mkdir -p plugins/AuthMe
           mkdir -p plugins/PlayerStats
-          
-          # --- WEB CONSOLE CONFIG PREPARATION ---
-          # Create folder so plugin finds the config
-          mkdir -p plugins/WebConsole
-          
-          # Check if you have the config in your repo and move it to the right place
-          if [ -f "plugins/WebConsole/config.yml" ]; then
-            echo "✅ WebConsole config found in repository."
-          else
-            echo "⚠️ WebConsole config.yml NOT found in repo. Plugin will use defaults (Port 8081)."
-          fi
-
-          # Download Minekube Connect
           curl -L -o plugins/connect-spigot.jar https://github.com/minekube/connect-java/releases/latest/download/connect-spigot.jar
-          
-          # VERIFY MANUAL CONFIG EXISTS
           if [ -f "plugins/connect/config.yml" ]; then
-            echo "✅ Manual config.yml detected. Using it."
-            cat plugins/connect/config.yml
+            echo "✅ Manual config.yml detected."
           else
             echo "❌ ERROR: No config.yml found in plugins/connect/!"
-            echo "Cracked players will be blocked because the default config is being used."
             exit 1
           fi
-          
-          # Inject Token only
           echo "{\"token\":\"${{ secrets.MINEKUBE_TOKEN }}\"}" > plugins/connect/token.json
 
       - name: Run Server
@@ -62,19 +43,53 @@ jobs:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           NGROK_AUTHTOKEN: ${{ secrets.NGROK_AUTHTOKEN }}
         run: |
-          # --- NGROK SETUP START ---
+          # --- NGROK SETUP ---
           curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
           echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
           sudo apt update && sudo apt install ngrok -y
           ngrok config add-authtoken $NGROK_AUTHTOKEN
           
-          # Start ngrok tunnel for WebConsole (Port 8088) in background
-          ngrok http 8088 --log=stdout > ngrok.log &
+          # Start ngrok tunnel for your CUSTOM HTML CONSOLE (Port 8080)
+          ngrok http 8080 --log=stdout > ngrok.log &
           sleep 5
-          echo "🔗 WEB CONSOLE LINK:"
+          echo "🔗 CUSTOM COMMAND CONSOLE LINK:"
           curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'
-          # --- NGROK SETUP END ---
           
+          # --- CREATE CUSTOM CONSOLE SCRIPT ---
+          cat << 'EOF' > console.js
+          const http = require('http');
+          const fs = require('fs');
+          http.createServer((req, res) => {
+            if (req.method === 'POST') {
+              let body = '';
+              req.on('data', chunk => { body += chunk.toString(); });
+              req.on('end', () => {
+                const params = new URLSearchParams(body);
+                const cmd = params.get('cmd');
+                if (cmd) {
+                  fs.appendFileSync('server_input', cmd + '\n');
+                  res.writeHead(200, {'Content-Type': 'text/html'});
+                  res.end('<h3>Command Sent: ' + cmd + '</h3><a href="/">Back</a>');
+                }
+              });
+            } else {
+              res.writeHead(200, {'Content-Type': 'text/html'});
+              res.end(`
+                <html><body style="background:#121212;color:white;font-family:sans-serif;text-align:center;padding-top:50px;">
+                  <h2>Minecraft Remote Console</h2>
+                  <form method="POST" style="margin-top:20px;">
+                    <input name="cmd" placeholder="type command here..." style="padding:10px;width:300px;border-radius:5px;border:none;" autofocus>
+                    <button style="padding:10px 20px;background:#5865F2;color:white;border:none;border-radius:5px;cursor:pointer;">Send</button>
+                  </form>
+                </body></html>
+              `);
+            }
+          }).listen(8080);
+          EOF
+
+          # Start Custom Console in background
+          node console.js &
+
           if [ -f plugins/DiscordSRV/config.yml ]; then
             sed -i "s/BotToken:.*/BotToken: \"$DISCORD_BOT_TOKEN\"/" plugins/DiscordSRV/config.yml
           fi
@@ -85,7 +100,7 @@ jobs:
           chmod +x server.jar
           mkfifo server_input
           
-          # FIXED AUTO-SAVE LOOP
+          # AUTO-SAVE LOOP
           (
             while true; do
               sleep 600
@@ -102,8 +117,6 @@ jobs:
           SERVER_PID=$!
           
           sleep 350m
-          
-          echo "save-all" > server_input
           echo "stop" > server_input
           wait $SERVER_PID
           rm -f server_input
@@ -115,34 +128,16 @@ jobs:
         run: |
           git config --global user.email "server-bot@example.com"
           git config --global user.name "ServerBot"
-          
-          # 1. DELETE SENSITIVE FOLDERS BEFORE SAVING
-          # Note: We remove them so they aren't committed back to repo with secrets,
-          # but the world files and other plugin data remain safe.
-          rm -rf plugins/DiscordSRV/
-          rm -rf plugins/WebConsole/
-          rm -rf logs/
-          rm -f plugins/connect/token.json
-          rm -f ngrok.log
-          
-          # 2. PREVENT SUBMODULE ERRORS
+          rm -rf plugins/DiscordSRV/ logs/
+          rm -f plugins/connect/token.json ngrok.log console.js
           find plugins/ -name ".git" -exec rm -rf {} +
-          
-          # 3. COMMIT & PUSH
           git add .
-          
           if ! git diff-index --quiet HEAD; then
             git commit -m "Automated world save [skip ci]"
             git push
           else
             echo "No changes to commit."
           fi
-          
-          # 4. RESTART TRIGGER
-          curl -L \
-            -X POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
+          curl -L -X POST -H "Authorization: Bearer $GH_TOKEN" \
             https://api.github.com/repos/${{ github.repository }}/dispatches \
             -d '{"event_type": "restart_server"}'
