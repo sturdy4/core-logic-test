@@ -1,0 +1,16 @@
+# WebConsole Configuration
+useSSL: false
+host: 0.0.0.0
+# The port ngrok is looking for
+port: 8088
+language: en
+# Use the built-in web interface
+useIntegratedWebServer: true
+clientPort: 8088
+socketPort: 8089
+
+# YOUR LOGIN CREDENTIALS
+passwords:
+  admin:
+    # Change 'your_user' and 'your_password' to whatever you want
+    Binwalk: "666666"
