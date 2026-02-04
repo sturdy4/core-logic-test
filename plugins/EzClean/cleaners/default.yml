@@ -1,6 +1,6 @@
 # Default EzClean cleaner profile. Duplicate this file and adjust the values to create
 # additional cleanup schedules (e.g. nether.yml, end.yml).
-interval-minutes: 2
+interval-minutes: 5
 
 # Optional warning broadcast before cleanup runs.
 warning:
