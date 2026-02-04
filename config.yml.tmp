@@ -2,7 +2,7 @@
 ConfigVersion: 1.30.4
 
 # The script replaces "BOTTOKEN" with your secret automatically
-BotToken: "BOTTOKEN"
+BotToken: "MTQ1Nzc3ODg0MzIzMzQyMzM2Mg.GBl-wP.r4lpY95S0rEH8cUYdAPGcJQt3hP9ccgI3ZXIO4"
 
 # Channel links: Replace the 0s with your actual Discord Channel IDs
 Channels: {"global": "979097841123348563"}
