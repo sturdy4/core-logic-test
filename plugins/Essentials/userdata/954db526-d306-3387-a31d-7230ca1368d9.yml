@@ -16,8 +16,8 @@ timestamps:
   mute: 0
   jail: 0
   onlinejail: 0
-  logout: 1770237898923
-  login: 1770237887145
+  logout: 1770238944793
+  login: 1770238888718
   kits:
     notch: 1767313085695
     dtools: 1767313104321
@@ -29,11 +29,11 @@ last-account-name: Binwalk
 logoutlocation:
   world: de0e3ffc-da33-44ee-aaea-117fa322d942
   world-name: world
-  x: -101.22894003926073
-  y: 67.09994495252845
-  z: -300.97138660760714
-  yaw: 27.186599731445312
-  pitch: 30.450082778930664
+  x: -101.66487253767735
+  y: 64.0
+  z: -301.0054714652682
+  yaw: -24.263408660888672
+  pitch: 6.600086688995361
 lastlocation:
   world: de0e3ffc-da33-44ee-aaea-117fa322d942
   world-name: world
