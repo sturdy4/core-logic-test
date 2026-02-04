@@ -1,11 +1,10 @@
-t=2026-02-04T21:37:11+0000 lvl=info msg="no configuration paths supplied"
-t=2026-02-04T21:37:11+0000 lvl=info msg="using configuration at default config path" path=/home/runner/.config/ngrok/ngrok.yml
-t=2026-02-04T21:37:11+0000 lvl=info msg="open config file" path=/home/runner/.config/ngrok/ngrok.yml err=nil
-t=2026-02-04T21:37:11+0000 lvl=info msg="FIPS 140 mode" enabled=false
-t=2026-02-04T21:37:11+0000 lvl=info msg="starting web service" obj=web addr=127.0.0.1:4040 allow_hosts=[]
-t=2026-02-04T21:37:11+0000 lvl=info msg="client session established" obj=tunnels.session
-t=2026-02-04T21:37:11+0000 lvl=info msg="tunnel session started" obj=tunnels.session
-t=2026-02-04T21:37:11+0000 lvl=info msg="started tunnel" obj=tunnels name=command_line addr=http://localhost:8080 url=https://mealless-loralee-unspiritual.ngrok-free.dev
-t=2026-02-04T21:37:16+0000 lvl=info msg=start pg=/api/tunnels id=a93c2e7492c82732
-t=2026-02-04T21:37:16+0000 lvl=info msg=end pg=/api/tunnels id=a93c2e7492c82732 status=200 dur=222.956µs
-t=2026-02-04T21:37:39+0000 lvl=info msg="join connections" obj=join id=068ea46c4af3 l=[::1]:8080 r=102.47.30.216:32984
+t=2026-02-04T21:42:54+0000 lvl=info msg="no configuration paths supplied"
+t=2026-02-04T21:42:54+0000 lvl=info msg="using configuration at default config path" path=/home/runner/.config/ngrok/ngrok.yml
+t=2026-02-04T21:42:54+0000 lvl=info msg="open config file" path=/home/runner/.config/ngrok/ngrok.yml err=nil
+t=2026-02-04T21:42:54+0000 lvl=info msg="FIPS 140 mode" enabled=false
+t=2026-02-04T21:42:54+0000 lvl=info msg="starting web service" obj=web addr=127.0.0.1:4040 allow_hosts=[]
+t=2026-02-04T21:42:54+0000 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-04T21:42:54+0000 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-04T21:42:54+0000 lvl=info msg="started tunnel" obj=tunnels name=command_line addr=http://localhost:8080 url=https://mealless-loralee-unspiritual.ngrok-free.dev
+t=2026-02-04T21:42:59+0000 lvl=info msg=start pg=/api/tunnels id=ce6ed64e3af17e37
+t=2026-02-04T21:42:59+0000 lvl=info msg=end pg=/api/tunnels id=ce6ed64e3af17e37 status=200 dur=244.988µs
