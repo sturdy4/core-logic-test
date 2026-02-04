@@ -29,17 +29,10 @@ jobs:
           mkdir -p plugins/connect
           mkdir -p plugins/AuthMe
           mkdir -p plugins/PlayerStats
-          
-          # Download Minekube Connect
           curl -L -o plugins/connect-spigot.jar https://github.com/minekube/connect-java/releases/latest/download/connect-spigot.jar
-          
-          # Inject Token only
           echo "{\"token\":\"${{ secrets.MINEKUBE_TOKEN }}\"}" > plugins/connect/token.json
           
-          # Verify Manual Config for Minekube
-          if [ -f "plugins/connect/config.yml" ]; then
-            echo "✅ Manual config.yml detected."
-          else
+          if [ ! -f "plugins/connect/config.yml" ]; then
             echo "❌ ERROR: No config.yml found in plugins/connect/!"
             exit 1
           fi
@@ -55,7 +48,6 @@ jobs:
           sudo apt update && sudo apt install ngrok -y
           ngrok config add-authtoken $NGROK_AUTHTOKEN
           
-          # Start ngrok tunnel for your CUSTOM HTML CONSOLE (Port 8080)
           ngrok http 8080 --log=stdout > ngrok.log &
           sleep 5
           echo "🔗 LIVE LOGS & COMMAND CONSOLE LINK:"
@@ -75,18 +67,17 @@ jobs:
                 const params = new URLSearchParams(body);
                 const cmd = params.get('cmd');
                 if (cmd) {
-                  // Direct injection into server pipe - supports ALL commands
                   fs.appendFileSync('server_input', cmd + '\n');
                 }
                 res.writeHead(302, {'Location': '/'});
                 res.end();
               });
             } else if (req.url === '/fetch_logs') {
-              // Read actual Minecraft logs
               const logPath = path.join(__dirname, 'logs', 'latest.log');
               if (fs.existsSync(logPath)) {
                 const content = fs.readFileSync(logPath, 'utf8');
-                const lines = content.split('\n').slice(-45).join('\n');
+                // Increased to 100 lines for better visibility
+                const lines = content.split('\n').slice(-100).join('\n');
                 res.end(lines);
               } else {
                 res.end("Server starting... logs appearing soon.");
@@ -98,28 +89,42 @@ jobs:
                 <head>
                   <title>MC Admin Console</title>
                   <style>
-                    body { background: #0c0c0c; color: #00ff41; font-family: 'Consolas', monospace; margin: 0; padding: 20px; display: flex; flex-direction: column; height: 92vh; }
-                    #log-win { background: #000; border: 1px solid #333; padding: 15px; flex-grow: 1; overflow-y: auto; white-space: pre-wrap; margin-bottom: 20px; font-size: 13px; line-height: 1.5; color: #00ff41; }
-                    .cmd-bar { display: flex; gap: 10px; }
+                    * { box-sizing: border-box; }
+                    body { background: #0c0c0c; color: #00ff41; font-family: 'Consolas', monospace; margin: 0; padding: 20px; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+                    #log-win { 
+                      background: #000; border: 1px solid #333; padding: 15px; 
+                      flex-grow: 1; overflow-y: auto; white-space: pre-wrap; 
+                      margin-bottom: 15px; font-size: 13px; line-height: 1.5; color: #00ff41;
+                      word-break: break-all;
+                    }
+                    .cmd-bar { display: flex; gap: 10px; flex-shrink: 0; padding-bottom: 10px; }
                     input { flex-grow: 1; background: #1a1a1a; border: 1px solid #444; color: white; padding: 12px; border-radius: 4px; outline: none; font-family: inherit; }
                     button { background: #00ff41; color: black; border: none; padding: 0 30px; border-radius: 4px; cursor: pointer; font-weight: bold; }
                     button:hover { background: #00cc33; }
                   </style>
                 </head>
                 <body>
-                  <h3 style="color: white; margin: 0 0 10px 0;">🛡️ Remote Terminal</h3>
+                  <h3 style="color: white; margin: 0 0 10px 0; flex-shrink: 0;">🛡️ Remote Terminal</h3>
                   <div id="log-win">Loading Stream...</div>
                   <form class="cmd-bar" method="POST">
                     <input name="cmd" placeholder="Execute any command..." autofocus autocomplete="off">
                     <button>RUN</button>
                   </form>
                   <script>
+                    let userScrolled = false;
+                    const win = document.getElementById('log-win');
+                    
+                    win.addEventListener('scroll', () => {
+                      const atBottom = win.scrollHeight - win.clientHeight <= win.scrollTop + 50;
+                      userScrolled = !atBottom;
+                    });
+
                     function poll() {
                       fetch('/fetch_logs').then(r => r.text()).then(d => {
-                        const win = document.getElementById('log-win');
-                        const scroll = win.scrollHeight - win.clientHeight <= win.scrollTop + 2;
                         win.innerText = d;
-                        if (scroll) win.scrollTop = win.scrollHeight;
+                        if (!userScrolled) {
+                          win.scrollTop = win.scrollHeight;
+                        }
                       });
                     }
                     setInterval(poll, 2000);
@@ -131,7 +136,7 @@ jobs:
           }).listen(8080);
           EOF
 
-          # Start Custom Console in background
+          # Start Custom Console
           node console.js &
 
           if [ -f plugins/DiscordSRV/config.yml ]; then
@@ -144,26 +149,22 @@ jobs:
           chmod +x server.jar
           mkfifo server_input
           
-          # AUTO-SAVE LOOP
+          # AUTO-SAVE LOOP (Every 2 Minutes)
           (
             while true; do
-              sleep 600
+              sleep 120
               if [ -p server_input ]; then
                 echo "save-all" > server_input
-                echo "say [Auto-Save] World state saved to runner disk." > server_input
               else
                 break
               fi
             done
           ) & 
           
-          # Run Java with tailing input
           tail -f server_input | java -Xms2G -Xmx14G -XX:+UseG1GC -Dsun.net.inetaddr.ttl=0 -Dio.netty.eventLoopThreads=8 -jar server.jar nogui &
           SERVER_PID=$!
           
-          sleep 120m
-          
-          echo "save-all" > server_input
+          sleep 350m
           echo "stop" > server_input
           wait $SERVER_PID
           rm -f server_input
@@ -175,27 +176,13 @@ jobs:
         run: |
           git config --global user.email "server-bot@example.com"
           git config --global user.name "ServerBot"
-          
-          # Clean up logs and temporary files before committing
-          rm -rf plugins/DiscordSRV/
-          rm -rf logs/
-          rm -f plugins/connect/token.json
-          rm -f ngrok.log console.js
-          
+          rm -rf plugins/DiscordSRV/ logs/ plugins/connect/token.json ngrok.log console.js
           find plugins/ -name ".git" -exec rm -rf {} +
           git add .
-          
           if ! git diff-index --quiet HEAD; then
             git commit -m "Automated world save [skip ci]"
             git push
-          else
-            echo "No changes to commit."
           fi
-          
-          curl -L \
-            -X POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
+          curl -L -X POST -H "Authorization: Bearer $GH_TOKEN" \
             https://api.github.com/repos/${{ github.repository }}/dispatches \
             -d '{"event_type": "restart_server"}'
