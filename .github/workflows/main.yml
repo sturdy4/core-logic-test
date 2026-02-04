@@ -43,6 +43,10 @@ jobs:
           NGROK_AUTHTOKEN: ${{ secrets.NGROK_AUTHTOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # --- PRE-START CLEANUP ---
+          rm -rf logs/* plugins/spark/tmp/*
+          rm -f server_input ngrok.log console.js
+
           # --- SHUTDOWN TRAP ---
           cleanup() {
             echo "⚠️ Shutdown signal received! Forcing final save..."
@@ -50,8 +54,8 @@ jobs:
             sleep 15
             git config --global user.email "server-bot@example.com"
             git config --global user.name "ServerBot"
-            # SECURITY: Remove secrets before push to prevent GitHub blocks
-            rm -rf plugins/DiscordSRV/config.yml console.js ngrok.log plugins/connect/token.json
+            # SECURITY & SPACE: Remove secrets and junk before push
+            rm -rf plugins/DiscordSRV/config.yml console.js ngrok.log plugins/connect/token.json logs/* plugins/spark/tmp/*
             git add .
             git commit -m "Emergency Save before Manual Cancel [skip ci]" || true
             git push --force || true
@@ -153,12 +157,12 @@ jobs:
                 sleep 5
                 git config --global user.email "server-bot@example.com"
                 git config --global user.name "ServerBot"
-                # SECURITY: Temporarily move the config with the secret before pushing
+                # SPACE MANAGEMENT: Clear junk before live sync
+                rm -rf logs/* plugins/spark/tmp/*
                 mv plugins/DiscordSRV/config.yml config.yml.tmp || true
                 git add .
                 git commit -m "Live Progress Sync (2-min) [skip ci]" || echo "No changes"
-                git push --force || echo "Push failed (API busy/Secrets)"
-                # Put it back so the plugin still works
+                git push --force || echo "Push failed"
                 mv config.yml.tmp plugins/DiscordSRV/config.yml || true
               else
                 break
@@ -181,8 +185,8 @@ jobs:
         run: |
           git config --global user.email "server-bot@example.com"
           git config --global user.name "ServerBot"
-          # SECURITY: Clean up all secret-containing files before final push
-          rm -rf plugins/DiscordSRV/config.yml logs/ plugins/connect/token.json ngrok.log console.js
+          # FINAL CLEANUP: Delete logs, temp files, and secrets
+          rm -rf plugins/DiscordSRV/config.yml logs/* plugins/connect/token.json ngrok.log console.js plugins/spark/tmp/*
           find plugins/ -name ".git" -exec rm -rf {} +
           git add .
           if ! git diff-index --quiet HEAD; then
