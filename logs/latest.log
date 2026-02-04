@@ -386,3 +386,19 @@ LagFixer 1.5.1.9 [build 140] - Best Performance Solution!
 [18:17:35] [Server thread/INFO]: ✓ Removed 0 entities. Next cleanup in 2 minutes.
 [18:18:02] [Server thread/INFO]: Saving the game (this may take a moment!)
 [18:18:02] [Server thread/INFO]: Saved the game
+[18:18:21] [Server thread/INFO]: [HorriblePlayerLoginEventHack] You have plugins listening to the PlayerLoginEvent, this will cause re-configuration APIs to be unavailable: [LuckPerms, AuthMe, Essentials, connect]
+[18:18:21] [Server thread/INFO]: [connect] Connect tunneled player logged in as Binwalk (UUID: 954db526-d306-3387-a31d-7230ca1368d9)
+[18:18:23] [TAB Processing Thread/INFO]: [TAB] [DEBUG] ViaVersion returned protocol version 772 for Binwalk
+[18:18:23] [TAB Processing Thread/INFO]: [TAB] [DEBUG] Player join of Binwalk processed in 15ms
+[18:18:23] [Server thread/INFO]: Binwalk[/102.47.30.216:0] logged in with entity id 1 at ([world]-97.84169084559252, 65.90369850096263, -303.2919346445712)
+[18:18:24] [Craft Scheduler Thread - 33 - AuthMe/INFO]: [AuthMe] Binwalk logged in 102.47.30.216
+[18:18:24] [TAB Scoreboard Thread/INFO]: [TAB] [DEBUG] Player Binwalk received scoreboard called sb954db526d30633, disabling TAB's scoreboard slotting.
+[18:18:24] [Server thread/INFO]: [voicechat] Received secret request of Binwalk (20)
+[18:18:24] [Server thread/INFO]: [voicechat] Sent secret to Binwalk
+[18:18:35] [Server thread/INFO]: ⚠ Entity cleanup in 1 minutes. Clear valuables!
+[18:19:32] [Server thread/INFO]: [Essentials] CONSOLE issued server command: /shout yo
+[18:19:35] [Server thread/INFO]: ✦ Entity cleanup commencing...
+[18:19:35] [Server thread/INFO]: ✓ Removed 74 entities. Next cleanup in 2 minutes.
+[18:19:44] [Server thread/INFO]: Binwalk issued server command: /ezclean cancel default
+[18:20:07] [Server thread/INFO]: Saving the game (this may take a moment!)
+[18:20:07] [Server thread/INFO]: Saved the game
