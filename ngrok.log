@@ -1,0 +1,12 @@
+t=2026-02-04T17:52:51+0000 lvl=info msg="no configuration paths supplied"
+t=2026-02-04T17:52:51+0000 lvl=info msg="using configuration at default config path" path=/home/runner/.config/ngrok/ngrok.yml
+t=2026-02-04T17:52:51+0000 lvl=info msg="open config file" path=/home/runner/.config/ngrok/ngrok.yml err=nil
+t=2026-02-04T17:52:51+0000 lvl=info msg="FIPS 140 mode" enabled=false
+t=2026-02-04T17:52:51+0000 lvl=info msg="starting web service" obj=web addr=127.0.0.1:4040 allow_hosts=[]
+t=2026-02-04T17:52:51+0000 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-04T17:52:51+0000 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-04T17:52:52+0000 lvl=info msg="started tunnel" obj=tunnels name=command_line addr=http://localhost:8080 url=https://mealless-loralee-unspiritual.ngrok-free.dev
+t=2026-02-04T17:52:56+0000 lvl=info msg=start pg=/api/tunnels id=5f6c5094a7f4a90c
+t=2026-02-04T17:52:56+0000 lvl=info msg=end pg=/api/tunnels id=5f6c5094a7f4a90c status=200 dur=204.461µs
+t=2026-02-04T17:53:49+0000 lvl=info msg="join connections" obj=join id=38e4eb80b5ae l=[::1]:8080 r=102.47.30.216:38578
+t=2026-02-04T17:54:19+0000 lvl=info msg="join connections" obj=join id=d0e15e46ef6e l=[::1]:8080 r=102.47.30.216:38578
