@@ -1,13 +1,17 @@
-enabled: false
-webhook: ""
-embed-title: "**Grim Alert**"
-embed-color: "#00FFFF"
+# Set this to true to turn on the webhook system
+enabled: true
+
+# Paste your Discord Webhook URL between the quotes below
+webhook: "YOUR_WEBHOOK_URL_HERE"
+
+embed-title: "🚨 **GrimAC Violation Detected** 🚨"
+embed-color: "#FF0000" # Changed to Red for high-priority alerts
 include-timestamp: true
+
 violation-content:
-    - "**Player**: %player%"
-    - "**Check**: %check%"
-    - "**Violations**: %violations%"
-    - "**Client Version**: %version%"
-    - "**Brand**: %brand%"
-    - "**Ping**: %ping%"
-    - "**TPS**: %tps%"
+    - "👤 **Player**: `%player%`"
+    - "🔍 **Check**: `%check%`"
+    - "📈 **Violations**: `%violations%`"
+    - "📋 **Details**: `%verbose%`" # Added this to see the math behind the flag
+    - "🎮 **Client**: `%brand%` (%version%)"
+    - "📶 **Ping**: `%ping%ms` | **TPS**: `%tps%`"
