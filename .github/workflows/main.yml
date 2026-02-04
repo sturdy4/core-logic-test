@@ -41,7 +41,22 @@ jobs:
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
           NGROK_AUTHTOKEN: ${{ secrets.NGROK_AUTHTOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # --- SHUTDOWN TRAP ---
+          cleanup() {
+            echo "⚠️ Shutdown signal received! Forcing final save..."
+            echo "stop" > server_input
+            sleep 15
+            git config --global user.email "server-bot@example.com"
+            git config --global user.name "ServerBot"
+            rm -f console.js ngrok.log plugins/connect/token.json
+            git add .
+            git commit -m "Emergency Save before Manual Cancel [skip ci]" || true
+            git push --force || true
+          }
+          trap cleanup SIGTERM SIGINT
+
           # --- NGROK SETUP ---
           curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
           echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
@@ -58,7 +73,6 @@ jobs:
           const http = require('http');
           const fs = require('fs');
           const path = require('path');
-
           http.createServer((req, res) => {
             if (req.method === 'POST') {
               let body = '';
@@ -76,7 +90,6 @@ jobs:
               const logPath = path.join(__dirname, 'logs', 'latest.log');
               if (fs.existsSync(logPath)) {
                 const content = fs.readFileSync(logPath, 'utf8');
-                // Increased to 100 lines for better visibility
                 const lines = content.split('\n').slice(-100).join('\n');
                 res.end(lines);
               } else {
@@ -84,59 +97,11 @@ jobs:
               }
             } else {
               res.writeHead(200, {'Content-Type': 'text/html'});
-              res.end(`
-                <html>
-                <head>
-                  <title>MC Admin Console</title>
-                  <style>
-                    * { box-sizing: border-box; }
-                    body { background: #0c0c0c; color: #00ff41; font-family: 'Consolas', monospace; margin: 0; padding: 20px; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-                    #log-win { 
-                      background: #000; border: 1px solid #333; padding: 15px; 
-                      flex-grow: 1; overflow-y: auto; white-space: pre-wrap; 
-                      margin-bottom: 15px; font-size: 13px; line-height: 1.5; color: #00ff41;
-                      word-break: break-all;
-                    }
-                    .cmd-bar { display: flex; gap: 10px; flex-shrink: 0; padding-bottom: 10px; }
-                    input { flex-grow: 1; background: #1a1a1a; border: 1px solid #444; color: white; padding: 12px; border-radius: 4px; outline: none; font-family: inherit; }
-                    button { background: #00ff41; color: black; border: none; padding: 0 30px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-                    button:hover { background: #00cc33; }
-                  </style>
-                </head>
-                <body>
-                  <h3 style="color: white; margin: 0 0 10px 0; flex-shrink: 0;">🛡️ Remote Terminal</h3>
-                  <div id="log-win">Loading Stream...</div>
-                  <form class="cmd-bar" method="POST">
-                    <input name="cmd" placeholder="Execute any command..." autofocus autocomplete="off">
-                    <button>RUN</button>
-                  </form>
-                  <script>
-                    let userScrolled = false;
-                    const win = document.getElementById('log-win');
-                    
-                    win.addEventListener('scroll', () => {
-                      const atBottom = win.scrollHeight - win.clientHeight <= win.scrollTop + 50;
-                      userScrolled = !atBottom;
-                    });
-
-                    function poll() {
-                      fetch('/fetch_logs').then(r => r.text()).then(d => {
-                        win.innerText = d;
-                        if (!userScrolled) {
-                          win.scrollTop = win.scrollHeight;
-                        }
-                      });
-                    }
-                    setInterval(poll, 2000);
-                    poll();
-                  </script>
-                </body></html>
-              `);
+              res.end(`<html><head><style>*{box-sizing:border-box;}body{background:#0c0c0c;color:#00ff41;font-family:monospace;margin:0;padding:20px;display:flex;flex-direction:column;height:100vh;overflow:hidden;}#log-win{background:#000;border:1px solid #333;padding:15px;flex-grow:1;overflow-y:auto;white-space:pre-wrap;margin-bottom:15px;font-size:13px;color:#00ff41;word-break:break-all;}.cmd-bar{display:flex;gap:10px;flex-shrink:0;padding-bottom:10px;}input{flex-grow:1;background:#1a1a1a;border:1px solid #444;color:white;padding:12px;border-radius:4px;outline:none;}button{background:#00ff41;color:black;border:none;padding:0 30px;border-radius:4px;cursor:pointer;font-weight:bold;}</style></head><body><h3 style="color:white;margin:0 0 10px 0;">🛡️ Remote Terminal</h3><div id="log-win">Loading Stream...</div><form class="cmd-bar" method="POST"><input name="cmd" placeholder="Execute any command..." autofocus autocomplete="off"><button>RUN</button></form><script>let us=false;const w=document.getElementById('log-win');w.onscroll=()=>{us=w.scrollHeight-w.clientHeight>w.scrollTop+50};setInterval(()=>{fetch('/fetch_logs').then(r=>r.text()).then(d=>{w.innerText=d;if(!us)w.scrollTop=w.scrollHeight;})},2000);</script></body></html>`);
             }
           }).listen(8080);
           EOF
 
-          # Start Custom Console
           node console.js &
 
           if [ -f plugins/DiscordSRV/config.yml ]; then
@@ -144,17 +109,26 @@ jobs:
           fi
           if [ -f server.properties ]; then
             sed -i "s/online-mode=.*/online-mode=false/" server.properties
+            sed -i "s/enforce-secure-profile=.*/enforce-secure-profile=false/" server.properties
+            sed -i "s/enable-query=.*/enable-query=true/" server.properties
           fi
           
           chmod +x server.jar
           mkfifo server_input
           
-          # AUTO-SAVE LOOP (Every 2 Minutes)
+          # ZERO-LOSS AUTO-SAVE LOOP (Every 2 Minutes)
           (
             while true; do
               sleep 120
               if [ -p server_input ]; then
                 echo "save-all" > server_input
+                sleep 5
+                git config --global user.email "server-bot@example.com"
+                git config --global user.name "ServerBot"
+                # Keep repo clean from temp runner files
+                git add .
+                git commit -m "Live Progress Sync (2-min) [skip ci]" || echo "No changes"
+                git push --force || echo "Push failed (API busy)"
               else
                 break
               fi
