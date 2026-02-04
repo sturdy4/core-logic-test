@@ -35,7 +35,7 @@ settings:
   register-minecraft-debug-commands: false
   register-minecraft-disabled-commands: false
   server-mod-name: Purpur
-  use-alternate-keepalive: false
+  use-alternate-keepalive: true
   disable-give-dropping: false
   bee-count-payload: false
   tps-catchup: true
@@ -50,7 +50,7 @@ settings:
       only-broadcast-to-affected-player: false
     death:
       only-broadcast-to-affected-player: false
-  lagging-threshold: 19.0
+  lagging-threshold: 19
   command:
     rambar:
       title: <gray>Ram<yellow>:</yellow> <used>/<xmx> (<percent>)
@@ -1641,8 +1641,8 @@ world-settings:
           radius: 0
           limit: 0
         search-radius:
-          acquire-poi: 48
-          nearest-bed-sensor: 48
+          acquire-poi: 20
+          nearest-bed-sensor: 20
       vindicator:
         ridable: false
         ridable-in-water: true
@@ -1918,7 +1918,7 @@ world-settings:
         exp-dropped-on-death:
           equation: expLevel * 7
           maximum: 100
-        teleport-if-outside-border: false
+        teleport-if-outside-border: true
         teleport-on-nether-ceiling-damage: false
         totem-of-undying-works-in-inventory: false
         fix-stuck-in-portal: false
