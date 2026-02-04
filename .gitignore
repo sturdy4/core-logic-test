@@ -1,0 +1,7 @@
+# Ignore Spark temporary and log files
+plugins/spark/tmp/*
+plugins/spark/logs/*
+
+# Ignore general server logs
+logs/*.log
+logs/*.gz
