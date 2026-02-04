@@ -1,13 +1,10 @@
-t=2026-02-04T19:11:48+0000 lvl=info msg="no configuration paths supplied"
-t=2026-02-04T19:11:48+0000 lvl=info msg="using configuration at default config path" path=/home/runner/.config/ngrok/ngrok.yml
-t=2026-02-04T19:11:48+0000 lvl=info msg="open config file" path=/home/runner/.config/ngrok/ngrok.yml err=nil
-t=2026-02-04T19:11:48+0000 lvl=info msg="FIPS 140 mode" enabled=false
-t=2026-02-04T19:11:48+0000 lvl=info msg="starting web service" obj=web addr=127.0.0.1:4040 allow_hosts=[]
-t=2026-02-04T19:11:48+0000 lvl=info msg="client session established" obj=tunnels.session
-t=2026-02-04T19:11:48+0000 lvl=info msg="tunnel session started" obj=tunnels.session
-t=2026-02-04T19:11:49+0000 lvl=info msg="started tunnel" obj=tunnels name=command_line addr=http://localhost:8080 url=https://mealless-loralee-unspiritual.ngrok-free.dev
-t=2026-02-04T19:11:51+0000 lvl=warn msg="failed to open private leg" id=dd0430e8e70f privaddr=localhost:8080 err="dial tcp [::1]:8080: connect: connection refused"
-t=2026-02-04T19:11:53+0000 lvl=info msg=start pg=/api/tunnels id=5f45d91614ad2c5e
-t=2026-02-04T19:11:53+0000 lvl=info msg=end pg=/api/tunnels id=5f45d91614ad2c5e status=200 dur=206.295µs
-t=2026-02-04T19:12:48+0000 lvl=info msg="join connections" obj=join id=ad51716e2e9f l=[::1]:8080 r=102.47.30.216:39782
-t=2026-02-04T19:13:09+0000 lvl=info msg="join connections" obj=join id=e54a969e6095 l=[::1]:8080 r=102.47.30.216:39782
+t=2026-02-04T19:44:10+0000 lvl=info msg="no configuration paths supplied"
+t=2026-02-04T19:44:10+0000 lvl=info msg="using configuration at default config path" path=/home/runner/.config/ngrok/ngrok.yml
+t=2026-02-04T19:44:10+0000 lvl=info msg="open config file" path=/home/runner/.config/ngrok/ngrok.yml err=nil
+t=2026-02-04T19:44:10+0000 lvl=info msg="FIPS 140 mode" enabled=false
+t=2026-02-04T19:44:10+0000 lvl=info msg="starting web service" obj=web addr=127.0.0.1:4040 allow_hosts=[]
+t=2026-02-04T19:44:11+0000 lvl=info msg="client session established" obj=tunnels.session
+t=2026-02-04T19:44:11+0000 lvl=info msg="tunnel session started" obj=tunnels.session
+t=2026-02-04T19:44:11+0000 lvl=info msg="started tunnel" obj=tunnels name=command_line addr=http://localhost:8080 url=https://mealless-loralee-unspiritual.ngrok-free.dev
+t=2026-02-04T19:44:15+0000 lvl=info msg=start pg=/api/tunnels id=4fa5f75a8e128185
+t=2026-02-04T19:44:15+0000 lvl=info msg=end pg=/api/tunnels id=4fa5f75a8e128185 status=200 dur=197.869µs
