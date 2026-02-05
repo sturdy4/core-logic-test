@@ -1,26 +1,28 @@
 cleaners:
   default:
     totals:
-      runs: 902
-      removed: 2755
-      duration-ms: 12673
+      runs: 903
+      removed: 2807
+      duration-ms: 12677
       tps-impact-total: 0.0
-      tps-samples: 902
+      tps-samples: 903
       groups:
-        dropped-items: 151
-        hostile-mobs: 2573
-        falling-blocks: 29
+        dropped-items: 158
+        hostile-mobs: 2587
+        falling-blocks: 60
         experience-orbs: 2
       worlds:
-        world: 2755
+        world: 2807
     last-run:
-      timestamp: 1770319829440
-      removed: 90
-      duration-ms: 2
-      tps-before: 20.000025615874392
-      tps-after: 20.000025615874392
+      timestamp: 1770320482522
+      removed: 52
+      duration-ms: 4
+      tps-before: 19.999862381144975
+      tps-after: 19.999862381144975
       tps-impact: 0.0
       groups:
-        hostile-mobs: 90
+        dropped-items: 7
+        falling-blocks: 31
+        hostile-mobs: 14
       worlds:
-        world: 90
+        world: 52
