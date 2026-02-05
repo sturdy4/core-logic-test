@@ -294,3 +294,20 @@
 [02-05 02:02:05]: [INFO] Checking for updates...
 [02-05 02:02:06]: [INFO] You are running the latest version.
 [02-05 07:51:25]: [INFO] AuthMe 5.7.0-FORK-b53 is unloaded successfully!
+[02-05 07:52:59]: [INFO] SQLite Setup finished
+[02-05 07:52:59]: [INFO] Hooked into LuckPerms!
+[02-05 07:52:59]: [INFO] Hooked successfully into Essentials
+[02-05 07:52:59]: [INFO] Hooked successfully into PlaceholderAPI
+[02-05 07:53:00]: [INFO] Essentials spawn file not found: '/home/runner/work/core-logic-test/core-logic-test/plugins/Essentials/spawn.yml'
+[02-05 07:53:00]: [INFO] 
+    ___         __  __    __  ___   
+   /   | __  __/ /_/ /_  /  |/  /__ 
+  / /| |/ / / / __/ __ \/ /|_/ / _ \
+ / ___ / /_/ / /_/ / / / /  / /  __/
+/_/  |_\__,_/\__/_/ /_/_/  /_/\___/ 
+                                    
+[02-05 07:53:00]: [INFO] AuthMeReReloaded is running on Paper
+[02-05 07:53:00]: [INFO] AuthMeReReloaded is enabled successfully!
+[02-05 07:53:00]: [INFO] GitHub: https://github.com/HaHaWTH/AuthMeReReloaded/
+[02-05 07:53:00]: [INFO] Checking for updates...
+[02-05 07:53:01]: [INFO] You are running the latest version.
