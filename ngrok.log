@@ -10,3 +10,5 @@ t=2026-02-05T20:31:12+0000 lvl=info msg=start pg=/api/tunnels id=55394ba70f366a1
 t=2026-02-05T20:31:12+0000 lvl=info msg=end pg=/api/tunnels id=55394ba70f366a1b status=200 dur=212.856µs
 t=2026-02-05T21:35:16+0000 lvl=info msg="join connections" obj=join id=4e2db43b1684 l=[::1]:8080 r=[2a09:bac5:30cc:1eb::31:da]:65424
 t=2026-02-05T21:46:02+0000 lvl=info msg="join connections" obj=join id=191cc97e225d l=[::1]:8080 r=[2a09:bac5:30cc:1eb::31:da]:16542
+t=2026-02-05T21:48:06+0000 lvl=info msg="join connections" obj=join id=47a3dd1e34c3 l=[::1]:8080 r=[2a09:bac5:30cc:1eb::31:da]:48738
+t=2026-02-05T21:48:10+0000 lvl=info msg="join connections" obj=join id=92e1012e5eb8 l=[::1]:8080 r=[2a09:bac5:30cc:1eb::31:da]:48738
