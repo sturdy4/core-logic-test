@@ -39,3 +39,5 @@ t=2026-02-05T22:12:36+0000 lvl=info msg="join connections" obj=join id=828cee0bb
 t=2026-02-05T22:13:36+0000 lvl=info msg="join connections" obj=join id=e1b82a873f12 l=[::1]:8080 r=[2a09:bac1:2260:10::31:da]:64590
 t=2026-02-05T22:14:36+0000 lvl=info msg="join connections" obj=join id=8d191affaf27 l=[::1]:8080 r=[2a09:bac1:2260:10::31:da]:64590
 t=2026-02-05T22:15:36+0000 lvl=info msg="join connections" obj=join id=c26fca4b38c8 l=[::1]:8080 r=[2a09:bac1:2260:10::31:da]:64590
+t=2026-02-05T22:16:36+0000 lvl=info msg="join connections" obj=join id=08e926a8ca1f l=[::1]:8080 r=[2a09:bac1:2260:10::31:da]:64590
+t=2026-02-05T22:17:36+0000 lvl=info msg="join connections" obj=join id=c3e4f47be187 l=[::1]:8080 r=[2a09:bac1:2260:10::31:da]:64590
