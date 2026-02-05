@@ -359,3 +359,20 @@
 [02-05 20:01:37]: [INFO:FINE] Binwalk logged in 102.47.30.216
 [02-05 20:02:13]: [INFO:FINE] Binwalk logged in 102.47.30.216
 [02-05 20:07:55]: [INFO:FINE] Binwalk logged in 102.47.30.216
+[02-05 20:31:53]: [INFO] SQLite Setup finished
+[02-05 20:31:53]: [INFO] Hooked into LuckPerms!
+[02-05 20:31:53]: [INFO] Hooked successfully into Essentials
+[02-05 20:31:53]: [INFO] Hooked successfully into PlaceholderAPI
+[02-05 20:31:53]: [INFO] Essentials spawn file not found: '/home/runner/work/core-logic-test/core-logic-test/plugins/Essentials/spawn.yml'
+[02-05 20:31:53]: [INFO] 
+    ___         __  __    __  ___   
+   /   | __  __/ /_/ /_  /  |/  /__ 
+  / /| |/ / / / __/ __ \/ /|_/ / _ \
+ / ___ / /_/ / /_/ / / / /  / /  __/
+/_/  |_\__,_/\__/_/ /_/_/  /_/\___/ 
+                                    
+[02-05 20:31:53]: [INFO] AuthMeReReloaded is running on Paper
+[02-05 20:31:53]: [INFO] AuthMeReReloaded is enabled successfully!
+[02-05 20:31:53]: [INFO] GitHub: https://github.com/HaHaWTH/AuthMeReReloaded/
+[02-05 20:31:53]: [INFO] Checking for updates...
+[02-05 20:31:54]: [INFO] You are running the latest version.
