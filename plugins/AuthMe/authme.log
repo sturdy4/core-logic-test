@@ -466,3 +466,6 @@
 [02-06 22:42:31]: [INFO] GitHub: https://github.com/HaHaWTH/AuthMeReReloaded/
 [02-06 22:42:31]: [INFO] Checking for updates...
 [02-06 22:42:31]: [INFO] You are running the latest version.
+[02-06 23:47:53]: [INFO:FINE] Binwalk used the wrong password
+[02-06 23:48:00]: [INFO:FINE] Binwalk used the wrong password
+[02-06 23:48:03]: [INFO:FINE] Binwalk logged in 41.234.48.61
