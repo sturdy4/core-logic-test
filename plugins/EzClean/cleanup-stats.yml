@@ -1,11 +1,11 @@
 cleaners:
   default:
     totals:
-      runs: 1307
+      runs: 1308
       removed: 3185
       duration-ms: 12716
       tps-impact-total: 0.0
-      tps-samples: 1307
+      tps-samples: 1308
       groups:
         dropped-items: 189
         hostile-mobs: 2934
@@ -14,11 +14,11 @@ cleaners:
       worlds:
         world: 3185
     last-run:
-      timestamp: 1770443913829
+      timestamp: 1770444213829
       removed: 0
       duration-ms: 0
-      tps-before: 19.999910040008604
-      tps-after: 19.999910040008604
+      tps-before: 20.00010531540605
+      tps-after: 20.00010531540605
       tps-impact: 0.0
       groups: {}
       worlds: {}
