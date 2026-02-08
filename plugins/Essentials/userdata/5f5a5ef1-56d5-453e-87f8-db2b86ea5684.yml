@@ -16,7 +16,15 @@ timestamps:
   mute: 0
   jail: 0
   onlinejail: 0
-  logout: 0
+  logout: 1770548837857
   login: 1770548825406
 money: '0'
 last-account-name: XKacperixX
+logoutlocation:
+  world: de0e3ffc-da33-44ee-aaea-117fa322d942
+  world-name: world
+  x: -1.5
+  y: 98.0
+  z: -4.5
+  yaw: 56.24999237060547
+  pitch: 25.650009155273438
