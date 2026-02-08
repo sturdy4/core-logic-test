@@ -8,3 +8,5 @@ t=2026-02-08T09:47:36+0000 lvl=info msg="tunnel session started" obj=tunnels.ses
 t=2026-02-08T09:47:36+0000 lvl=info msg="started tunnel" obj=tunnels name=command_line addr=http://localhost:8080 url=https://mealless-loralee-unspiritual.ngrok-free.dev
 t=2026-02-08T09:47:41+0000 lvl=info msg=start pg=/api/tunnels id=1684a0c42e5be04f
 t=2026-02-08T09:47:41+0000 lvl=info msg=end pg=/api/tunnels id=1684a0c42e5be04f status=200 dur=202.427µs
+t=2026-02-08T11:18:46+0000 lvl=info msg="join connections" obj=join id=f7b01f206643 l=[::1]:8080 r=190.2.149.92:55345
+t=2026-02-08T11:19:18+0000 lvl=info msg="join connections" obj=join id=095c4d8ef087 l=[::1]:8080 r=190.2.149.92:42163
