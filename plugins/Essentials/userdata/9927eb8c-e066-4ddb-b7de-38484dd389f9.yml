@@ -16,7 +16,15 @@ timestamps:
   mute: 0
   jail: 0
   onlinejail: 0
-  logout: 0
+  logout: 1770595613389
   login: 1770595604555
 money: '0'
 last-account-name: _Maj1_
+logoutlocation:
+  world: de0e3ffc-da33-44ee-aaea-117fa322d942
+  world-name: world
+  x: 0.5
+  y: 90.0
+  z: 3.5
+  yaw: -54.47139358520508
+  pitch: 23.355295181274414
