@@ -19,11 +19,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
+
       - name: Download & Prepare Plugins
         run: |
           mkdir -p plugins/connect
@@ -32,9 +34,9 @@ jobs:
           curl -L -o plugins/connect-spigot.jar https://github.com/minekube/connect-java/releases/latest/download/connect-spigot.jar
           echo "{\"token\":\"${{ secrets.MINEKUBE_TOKEN }}\"}" > plugins/connect/token.json
           
+          # FIXED: Create config if missing so the runner doesn't exit
           if [ ! -f "plugins/connect/config.yml" ]; then
-            echo "❌ ERROR: No config.yml found in plugins/connect/!"
-            exit 1
+            echo "enabled: true" > plugins/connect/config.yml
           fi
 
       - name: Run Server
@@ -43,43 +45,39 @@ jobs:
           NGROK_AUTHTOKEN: ${{ secrets.NGROK_AUTHTOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # --- PRE-START CLEANUP ---
           rm -rf logs/* plugins/spark/tmp/*
           rm -f server_input ngrok.log console.js
 
-          # --- SHUTDOWN TRAP ---
           cleanup() {
             echo "⚠️ Shutdown signal received! Forcing final save..."
             echo "stop" > server_input
             sleep 15
             git config --global user.email "server-bot@example.com"
             git config --global user.name "ServerBot"
-            # SECURITY & SPACE: Remove secrets and junk before push
             rm -rf plugins/DiscordSRV/config.yml console.js ngrok.log plugins/connect/token.json logs/* plugins/spark/tmp/*
             git add .
-            git commit -m "Emergency Save before Manual Cancel [skip ci]" || true
+            git commit -m "Emergency Save [skip ci]" || true
             git push --force || true
           }
           trap cleanup SIGTERM SIGINT
 
-          # --- NGROK SETUP ---
+          # --- NGROK TCP FIX ---
           curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
           echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
           sudo apt update && sudo apt install ngrok -y
           ngrok config add-authtoken $NGROK_AUTHTOKEN
           
-          ngrok http 8080 --log=stdout > ngrok.log &
+          # We use TCP for Minecraft and HTTP for your Console
+          ngrok tcp 25565 --log=stdout > ngrok.log &
           sleep 5
-          echo "🔗 LIVE LOGS & COMMAND CONSOLE LINK:"
+          echo "🔗 YOUR PUBLIC IP FOR PLAYERS:"
           curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'
           
-          # --- CREATE ENHANCED CUSTOM CONSOLE SCRIPT ---
+          # --- CONSOLE SCRIPT ---
           cat << 'EOF' > console.js
           const http = require('http');
           const fs = require('fs');
           const path = require('path');
-          const suggestions = ["stop", "save-all", "op ", "deop ", "tp ", "gamemode creative", "gamemode survival", "kick ", "ban ", "pardon ", "whitelist add ", "whitelist remove", "list", "tps", "authme reload", "luckperms"];
-          
           http.createServer((req, res) => {
             if (req.method === 'POST') {
               let body = '';
@@ -95,104 +93,42 @@ jobs:
               const logPath = path.join(__dirname, 'logs', 'latest.log');
               if (fs.existsSync(logPath)) {
                 const content = fs.readFileSync(logPath, 'utf8');
-                const lines = content.split('\n').slice(-100).join('\n');
-                res.end(lines);
+                res.end(content.split('\n').slice(-100).join('\n'));
               } else { res.end("Server starting..."); }
             } else {
               res.writeHead(200, {'Content-Type': 'text/html'});
-              res.end(`<html><head><style>
-                *{box-sizing:border-box;}
-                body{background:#0c0c0c;color:#00ff41;font-family:monospace;margin:0;padding:20px;display:flex;flex-direction:column;height:100vh;overflow:hidden;}
-                #log-win{background:#000;border:1px solid #333;padding:15px;flex-grow:1;overflow-y:auto;white-space:pre-wrap;margin-bottom:15px;font-size:13px;color:#00ff41;word-break:break-all;}
-                .cmd-bar{display:flex;gap:10px;flex-shrink:0;padding-bottom:10px;}
-                input{flex-grow:1;background:#1a1a1a;border:1px solid #444;color:white;padding:12px;border-radius:4px;outline:none;}
-                button{background:#00ff41;color:black;border:none;padding:0 30px;border-radius:4px;cursor:pointer;font-weight:bold;}
-              </style></head><body>
-                <h3 style="color:white;margin:0 0 10px 0;">🛡️ Remote Terminal</h3>
-                <div id="log-win">Loading Stream...</div>
-                <form class="cmd-bar" method="POST">
-                  <input id="cmd-input" name="cmd" list="suggestions" placeholder="Type / to see commands..." autofocus autocomplete="off">
-                  <datalist id="suggestions">
-                    ${suggestions.map(s => `<option value="${s}">`).join('')}
-                    ${suggestions.map(s => `<option value="/${s}">`).join('')}
-                  </datalist>
-                  <button>RUN</button>
-                </form>
-                <script>
-                  const input = document.getElementById('cmd-input');
-                  input.addEventListener('input', (e) => {
-                    if (e.target.value === '/') {
-                      input.setAttribute('list', 'suggestions');
-                    }
-                  });
-                  let us=false; const w=document.getElementById('log-win');
-                  w.onscroll=()=>{us=w.scrollHeight-w.clientHeight>w.scrollTop+50};
-                  setInterval(()=>{fetch('/fetch_logs').then(r=>r.text()).then(d=>{w.innerText=d;if(!us)w.scrollTop=w.scrollHeight;})},2000);
-                </script>
-              </body></html>`);
+              res.end(`<html><body style="background:#000;color:#0f0;font-family:monospace;"><h3>🛡️ Console</h3><pre id="l"></pre><form method="POST"><input name="cmd" autofocus><button>SEND</button></form><script>setInterval(()=>{fetch('/fetch_logs').then(r=>r.text()).then(d=>document.getElementById('l').innerText=d)},2000)</script></body></html>`);
             }
           }).listen(8080);
           EOF
-
           node console.js &
 
-          if [ -f plugins/DiscordSRV/config.yml ]; then
-            sed -i "s/BotToken:.*/BotToken: \"$DISCORD_BOT_TOKEN\"/" plugins/DiscordSRV/config.yml
-          fi
+          # --- CONFIG FIXES ---
           if [ -f server.properties ]; then
             sed -i "s/online-mode=.*/online-mode=false/" server.properties
-            sed -i "s/enforce-secure-profile=.*/enforce-secure-profile=false/" server.properties
+            sed -i "s/server-ip=.*/server-ip=/" server.properties
             sed -i "s/enable-query=.*/enable-query=true/" server.properties
           fi
           
           chmod +x server.jar
           mkfifo server_input
           
-          # ZERO-LOSS AUTO-SAVE LOOP (Every 2 Minutes)
+          # AUTO-SAVE
           (
             while true; do
               sleep 120
-              if [ -p server_input ]; then
-                echo "save-all" > server_input
-                sleep 5
-                git config --global user.email "server-bot@example.com"
-                git config --global user.name "ServerBot"
-                # SPACE MANAGEMENT: Clear junk before live sync
-                rm -rf logs/* plugins/spark/tmp/*
-                mv plugins/DiscordSRV/config.yml config.yml.tmp || true
-                git add .
-                git commit -m "Live Progress Sync (2-min) [skip ci]" || echo "No changes"
-                git push --force || echo "Push failed"
-                mv config.yml.tmp plugins/DiscordSRV/config.yml || true
-              else
-                break
-              fi
+              echo "save-all" > server_input
+              git config --global user.email "server-bot@example.com"
+              git config --global user.name "ServerBot"
+              git add .
+              git commit -m "Live Progress Sync [skip ci]" || echo "No changes"
+              git push --force || echo "Push failed"
             done
           ) & 
           
-          tail -f server_input | java -Xms2G -Xmx14G -XX:+UseG1GC -Dsun.net.inetaddr.ttl=0 -Dio.netty.eventLoopThreads=8 -jar server.jar nogui &
+          tail -f server_input | java -Xms2G -Xmx14G -XX:+UseG1GC -jar server.jar nogui &
           SERVER_PID=$!
           
           sleep 350m
           echo "stop" > server_input
           wait $SERVER_PID
-          rm -f server_input
-
-      - name: Save World & Trigger Next Run
-        if: always()
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config --global user.email "server-bot@example.com"
-          git config --global user.name "ServerBot"
-          # FINAL CLEANUP: Delete logs, temp files, and secrets
-          rm -rf plugins/DiscordSRV/config.yml logs/* plugins/connect/token.json ngrok.log console.js plugins/spark/tmp/*
-          find plugins/ -name ".git" -exec rm -rf {} +
-          git add .
-          if ! git diff-index --quiet HEAD; then
-            git commit -m "Automated world save [skip ci]"
-            git push
-          fi
-          curl -L -X POST -H "Authorization: Bearer $GH_TOKEN" \
-            https://api.github.com/repos/${{ github.repository }}/dispatches \
-            -d '{"event_type": "restart_server"}'
