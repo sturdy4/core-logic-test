@@ -195,4 +195,4 @@ jobs:
           fi
           curl -L -X POST -H "Authorization: Bearer $GH_TOKEN" \
             https://api.github.com/repos/${{ github.repository }}/dispatches \
-            -d '{"event_type": "restart_server"}
+            -d '{"event_type": "restart_server"}'
